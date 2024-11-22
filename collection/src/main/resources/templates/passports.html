@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Passports</title>
+<link rel="stylesheet" href="/pico.purple.min.css">
+</head>
+<body class="container">
+	<h1>la page des passeports!!!</h1>
+	<ul>
+		<li th:each="passport : ${passports}">
+			<span th:text="${passport.code}">XXXXX</span> 
+			<span th:text="'(' + ${passport.owner.name} + ')'">(owner)</span>
+		</li>
+	</ul>
+	<form>
+	<label>
+		This is a label:
+		<input name="toto">
+	</label>
+	<input type="submit">
+	</form>
+</body>
+</html>
