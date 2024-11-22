@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Ma Collection</title>
+</head>
+<body>
+    <h1>Ma Collection</h1>
+    <ul>
+        <li th:each="character : ${characters}">
+            <h2 th:text="${character.name}">Nom</h2>
+            <p th:text="${character.description}">Description</p>
+            <img th:src="${character.imageUrl}" alt="Image du personnage">
+        </li>
+    </ul>
+    <a href="/">Retour à l'accueil</a>
+</body>
+</html>
