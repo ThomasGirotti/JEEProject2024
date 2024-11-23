@@ -10,10 +10,64 @@ public class Character {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-    private String description;
     private String imageUrl;
+    private Short price;
+    private Short claimCount;
+    private Short likeCount;
 
-    // Getters et setters
+    public Character() {
+    }
+
+    public Character(String name, String imageUrl, Short price, Short claimCount, Short likeCount) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
+        this.claimCount = claimCount;
+        this.likeCount = likeCount;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Short getPrice() {
+        return price;
+    }
+
+    public void setPrice(Short price) {
+        this.price = price;
+    }
+
+    public Short getClaimCount() {
+        return claimCount;
+    }
+
+    public void setClaimCount(Short claimCount) {
+        this.claimCount = claimCount;
+    }
+
+    public Short getLikeCount() {
+        return likeCount;
+    }
+
+    public void setLikeCount(Short likeCount) {
+        this.likeCount = likeCount;
+    }
 }
