@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Character {
@@ -26,6 +28,10 @@ public class Character {
         this.claimCount = claimCount;
         this.likeCount = likeCount;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Long getId() {
         return id;
@@ -69,5 +75,13 @@ public class Character {
 
     public void setLikeCount(Short likeCount) {
         this.likeCount = likeCount;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

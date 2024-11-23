@@ -1,17 +1,42 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Ma Collection</title>
 </head>
 <body>
     <h1>Ma Collection</h1>
+    <h1>
+        Hello <span sec:authentication="name"></span>!
+    </h1>
     <ul>
         <li th:each="character : ${characters}">
-            <h2 th:text="${character.name}">Nom</h2>
-            <p th:text="${character.description}">Description</p>
-            <img th:src="${character.imageUrl}" alt="Image du personnage">
+            <strong th:text="${character.name}"></strong>: 
+            <br>
+            Prix : <span th:text="${character.price}"></span> |
+            Rang Claim : <span th:text="${character.claimCount}"></span> |
+            Rang Like : <span th:text="${character.likeCount}"></span>
         </li>
+            <!-- <a th:href="@{/collection/delete/{id}(id=${character.id})}">Supprimer</a> -->
     </ul>
+    <h2>Ajouter un nouveau personnage</h2>
+    <form th:action="@{/collection/add}" method="post">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="price">Prix :</label>
+        <input type="number" id="price" name="price" required>
+        <br>
+        <label for="claimCount">Rang Claim :</label>
+        <input type="number" id="claimCount" name="claimCount" required>
+        <br>
+        <label for="likeCount">Rang Like :</label>
+        <input type="number" id="likeCount" name="likeCount" required>
+        <br>
+        <label for="image">Image :</label>
+        <input type="text" id="image" name="image" required>
+        <br>
+        <button type="submit">+</button>
+    </form>
     <a href="/">Retour à l'accueil</a>
 </body>
 </html>

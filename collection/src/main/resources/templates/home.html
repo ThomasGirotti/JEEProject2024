@@ -1,13 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Accueil</title>
 </head>
 <body>
     <h1>Bienvenue sur le gestionnaire de collection</h1>
-    <a href="/collection">Voir ma collection</a>
-    <a href="/login">Se connecter</a>
-    <a href="/register">Créer un compte</a>
-    <a href="/logout">Se déconnecter</a>
+    <div sec:authorize="isAuthenticated()">
+        <a href="/collection">Voir ma collection</a>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit">Se déconnecter</button>
+        </form>
+    </div>
+    <div sec:authorize="isAnonymous()">
+        <a href="/login">Se connecter</a>
+        <a href="/register">Créer un compte</a>
+    </div>
 </body>
 </html>

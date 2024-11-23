@@ -20,7 +20,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/register", "/h2-console/**").permitAll() // Autoriser la console H2
+                .requestMatchers("/", "/login", "/register", "/h2-console/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .permitAll()
             )
             .logout(logout -> logout
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/")
                 .permitAll()
             );
 

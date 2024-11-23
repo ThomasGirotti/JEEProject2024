@@ -1,22 +1,27 @@
 package com.jeemudae.collection.service;
 
-import com.jeemudae.collection.repository.Character;
-import com.jeemudae.collection.repository.CharacterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.jeemudae.collection.repository.Character;
+import com.jeemudae.collection.repository.CharacterRepository;
+import com.jeemudae.collection.repository.User;
 
 @Service
 public class CharacterService {
-    @Autowired
-    private CharacterRepository characterRepository;
+    private final CharacterRepository characterRepository;
 
-    public List<Character> getAllCharacters() {
-        return characterRepository.findAll();
+    public CharacterService(CharacterRepository characterRepository) {
+        this.characterRepository = characterRepository;
     }
 
-    public Character saveCharacter(Character character) {
-        return characterRepository.save(character);
+    public List<Character> getCharactersForUser(User user) {
+        return characterRepository.findByUser(user);
     }
+
+    public void saveCharacter(Character character) {
+        characterRepository.save(character);
+    }
+
 }
