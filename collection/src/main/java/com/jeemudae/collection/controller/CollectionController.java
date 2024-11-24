@@ -10,17 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jeemudae.collection.repository.Character;
 import com.jeemudae.collection.repository.User;
 import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
+import com.jeemudae.collection.service.FileStorageService;
 @Controller
 public class CollectionController {
+    private final FileStorageService fileStorageService;
     private final CharacterService characterService;
     private final UserRepository userRepository;
 
-    public CollectionController(CharacterService characterService, UserRepository userRepository) {
+    public CollectionController(FileStorageService fileStorageService, CharacterService characterService, UserRepository userRepository) {
+        this.fileStorageService = fileStorageService;
         this.characterService = characterService;
         this.userRepository = userRepository;
     }
@@ -29,18 +33,16 @@ public class CollectionController {
     public String getCollection(@RequestParam(value = "username", required = false) String username, Model model) {
         Optional<User> optionalUser;
         if (username == null) {
-            // Si aucun username n'est passé, on récupère l'utilisateur connecté
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername)
                     .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
             optionalUser = Optional.of(user);
         } else {
-            // Sinon, on récupère l'utilisateur spécifié par le paramètre
             optionalUser = userRepository.findByUsername(username);
             if (optionalUser.isEmpty()) {
                 model.addAttribute("errorMessage", "Aucun utilisateur trouvé pour ce nom.");
-                return "search"; // Renvoie à la page de recherche
+                return "search";
             }
         }
         User user = optionalUser.get();
@@ -50,31 +52,29 @@ public class CollectionController {
     }
 
     @PostMapping("/collection/add")
-    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") Short price, @RequestParam("image") String image, @RequestParam("claimCount") Long claimCount, @RequestParam("likeCount") Long likeCount, Model model) {
-        // Récupérer l'utilisateur connecté
+    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") Short price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") Long claimCount, @RequestParam("likeCount") Long likeCount, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        String currentUsername = authentication.getName();
+        User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         
-        // Créer un nouveau personnage
+        String filename = null;
+        if (image != null && !image.isEmpty()) {
+            filename = fileStorageService.store(image); // Sauvegarder l'image
+        }
         Character character = new Character();
         character.setName(name);
         character.setPrice(price);
-        character.setImageUrl(image);
+        character.setImagePath(filename);
         character.setClaimCount(claimCount);
         character.setLikeCount(likeCount);
-        character.setUser(user);
+        character.setUser(currentUser);
         try {
-            // Sauvegarder le personnage
             characterService.saveCharacter(character);
         } catch (DataIntegrityViolationException e) {
-            // Ajouter un message d'erreur au modèle
             model.addAttribute("error", "Un personnage avec ce nom existe déjà !");
-            // Retourner à la page collection avec le message d'erreur
-            model.addAttribute("characters", characterService.getCharactersForUser(user));
+            model.addAttribute("characters", characterService.getCharactersForUser(currentUser));
             return "collection";
         }
-        // Rediriger vers la page collection
         return "redirect:/collection";
     }
 }

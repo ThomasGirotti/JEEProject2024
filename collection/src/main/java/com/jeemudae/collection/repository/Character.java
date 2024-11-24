@@ -20,7 +20,7 @@ public class Character {
     private Long id;
     @Column(nullable = false)
     private String name;
-    private String imageUrl;
+    private String imagePath;
     private Short price;
     private Long claimCount;
     private Long likeCount;
@@ -31,9 +31,9 @@ public class Character {
     public Character() {
     }
     
-    public Character(String name, String imageUrl, Short price, Long claimCount, Long likeCount) {
+    public Character(String name, String imagePath, Short price, Long claimCount, Long likeCount) {
         this.name = name;
-        this.imageUrl = imageUrl;
+        this.imagePath = imagePath;
         this.price = price;
         this.claimCount = claimCount;
         this.likeCount = likeCount;
@@ -51,12 +51,12 @@ public class Character {
         this.name = name;
     }
     
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImagePath() {
+        return imagePath;
     }
     
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
     
     public Short getPrice() {
