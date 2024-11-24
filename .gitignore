@@ -2,3 +2,4 @@ collection/testdb.mv.db
 .vscode/settings.json
 .vscode/launch.json
 collection/testdb.trace.db
+collection/uploads/*
