@@ -11,4 +11,3 @@ public class ThymeLeafConfig {
         return new SpringSecurityDialect();
     }
 }
-

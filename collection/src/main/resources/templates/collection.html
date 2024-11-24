@@ -19,7 +19,6 @@
             Rang Claim : <span th:text="${character.claimCount}"></span> |
             Rang Like : <span th:text="${character.likeCount}"></span>
         </li>
-        <!-- <a th:href="@{/collection/delete/{id}(id=${character.id})}">Supprimer</a> -->
     </ul>
     <div th:if="${#authentication.name == user.username}">
         <h2>Ajouter un nouveau personnage</h2>

@@ -1,5 +1,7 @@
 package com.jeemudae.collection.controller;
 
+import java.util.Optional;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,19 +27,23 @@ public class CollectionController {
 
     @GetMapping("/collection")
     public String getCollection(@RequestParam(value = "username", required = false) String username, Model model) {
-        User user;
+        Optional<User> optionalUser;
         if (username == null) {
             // Si aucun username n'est passé, on récupère l'utilisateur connecté
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
-            user = userRepository.findByUsername(currentUsername)
+            User user = userRepository.findByUsername(currentUsername)
                     .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+            optionalUser = Optional.of(user);
         } else {
             // Sinon, on récupère l'utilisateur spécifié par le paramètre
-            user = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+            optionalUser = userRepository.findByUsername(username);
+            if (optionalUser.isEmpty()) {
+                model.addAttribute("errorMessage", "Aucun utilisateur trouvé pour ce nom.");
+                return "search"; // Renvoie à la page de recherche
+            }
         }
-
+        User user = optionalUser.get();
         model.addAttribute("user", user);
         model.addAttribute("characters", characterService.getCharactersForUser(user));
         return "collection";
