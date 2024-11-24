@@ -1,7 +1,6 @@
 package com.jeemudae.collection.controller;
 
-import java.util.List;
-
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,24 +24,32 @@ public class CollectionController {
     }
 
     @GetMapping("/collection")
-    public String collection(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        List<Character> characters = characterService.getCharactersForUser(user);
-        model.addAttribute("characters", characters);
+    public String getCollection(@RequestParam(value = "username", required = false) String username, Model model) {
+        User user;
+        if (username == null) {
+            // Si aucun username n'est passé, on récupère l'utilisateur connecté
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String currentUsername = authentication.getName();
+            user = userRepository.findByUsername(currentUsername)
+                    .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        } else {
+            // Sinon, on récupère l'utilisateur spécifié par le paramètre
+            user = userRepository.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("characters", characterService.getCharactersForUser(user));
         return "collection";
     }
 
     @PostMapping("/collection/add")
-    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") Short price, @RequestParam("image") String image, @RequestParam("claimCount") Short claimCount, @RequestParam("likeCount") Short likeCount) {
+    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") Short price, @RequestParam("image") String image, @RequestParam("claimCount") Long claimCount, @RequestParam("likeCount") Long likeCount, Model model) {
         // Récupérer l'utilisateur connecté
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        
         // Créer un nouveau personnage
         Character character = new Character();
         character.setName(name);
@@ -51,10 +58,16 @@ public class CollectionController {
         character.setClaimCount(claimCount);
         character.setLikeCount(likeCount);
         character.setUser(user);
-
-        // Sauvegarder le personnage
-        characterService.saveCharacter(character);
-
+        try {
+            // Sauvegarder le personnage
+            characterService.saveCharacter(character);
+        } catch (DataIntegrityViolationException e) {
+            // Ajouter un message d'erreur au modèle
+            model.addAttribute("error", "Un personnage avec ce nom existe déjà !");
+            // Retourner à la page collection avec le message d'erreur
+            model.addAttribute("characters", characterService.getCharactersForUser(user));
+            return "collection";
+        }
         // Rediriger vers la page collection
         return "redirect:/collection";
     }

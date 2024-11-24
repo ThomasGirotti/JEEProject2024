@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Recherche</title>
+</head>
+<body>
+    <h1>Recherche d'utilisateur</h1>
+    <form th:action="@{/collection}" method="get">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" placeholder="Entrer un nom d'utilisateur" required>
+        <button type="submit">Rechercher</button>
+    </form>
+</body>
+</html>
