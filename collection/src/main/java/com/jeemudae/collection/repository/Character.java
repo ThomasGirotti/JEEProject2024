@@ -20,23 +20,28 @@ public class Character {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String imagePath;
-    private int price;
+    @Column(nullable = false)
+    private int value;
+    @Column(nullable = false)
     private int claimCount;
+    @Column(nullable = false)
     private int likeCount;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "collection_set_id", nullable = false)
+    private CollectionSet collectionSet;
     
     public Character() {
     }
     
-    public Character(String name, String imagePath, int price, int claimCount, int likeCount) {
+    public Character(String name, String imagePath, int value, int claimCount, int likeCount, CollectionSet collectionSet) {
         this.name = name;
         this.imagePath = imagePath;
-        this.price = price;
+        this.value = value;
         this.claimCount = claimCount;
         this.likeCount = likeCount;
+        this.collectionSet = collectionSet;
     }
     
     public Long getId() {
@@ -59,12 +64,12 @@ public class Character {
         this.imagePath = imagePath;
     }
     
-    public int getPrice() {
-        return price;
+    public int getValue() {
+        return value;
     }
     
-    public void setPrice(int price) {
-        this.price = price;
+    public void setValue(int value) {
+        this.value = value;
     }
     
     public int getClaimCount() {
@@ -82,12 +87,12 @@ public class Character {
     public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
-    
-    public User getUser() {
-        return user;
+
+    public CollectionSet getCollectionSet() {
+        return collectionSet;
     }
-    
-    public void setUser(User user) {
-        this.user = user;
+
+    public void setCollectionSet(CollectionSet collectionSet) {
+        this.collectionSet = collectionSet;
     }
 }
