@@ -1,7 +1,17 @@
 package com.jeemudae.collection.repository;
 
-import jakarta.persistence.*;
 import java.util.List;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "collection_sets")
@@ -45,26 +55,28 @@ public class CollectionSet {
         return characters;
     }
 
-    public void setCharacters(List<Character> characters) {
-        this.characters = characters;
-        recalculateTotalValue();
-    }
-
     public int getTotalValue() {
         return totalValue;
     }
 
     public void recalculateTotalValue() {
-        this.totalValue = characters.stream().mapToInt(Character::getValue).sum();
+        this.totalValue = characters.stream().mapToInt(Character::getPrice).sum();
+        System.out.println("Total value recalculated: " + totalValue);
     }
 
     public void addCharacter(Character character) {
-        characters.add(character);
-        recalculateTotalValue();
+        if (characters != null) {
+            characters.add(character);
+            character.setCollectionSet(this);
+            recalculateTotalValue();
+        }
     }
-
+    
     public void removeCharacter(Character character) {
-        characters.remove(character);
-        recalculateTotalValue();
-    }
+        if (characters != null) {
+            characters.remove(character);
+            character.setCollectionSet(null);
+            recalculateTotalValue();
+        }
+    }    
 }

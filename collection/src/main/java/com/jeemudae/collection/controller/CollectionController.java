@@ -53,10 +53,11 @@ public class CollectionController {
     }
 
     @PostMapping("/collection/add")
-    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int value, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
+    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
-        User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        User currentUser = userRepository.findByUsername(currentUsername)
+        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         CollectionSet collectionSet = currentUser.getCollectionSet();
         String filename = null;
         if (image != null && !image.isEmpty()) {
@@ -64,12 +65,12 @@ public class CollectionController {
         }
         Character character = new Character();
         character.setName(name);
-        character.setValue(value);
+        character.setPrice(price);
         character.setImagePath(filename);
         character.setClaimCount(claimCount);
         character.setLikeCount(likeCount);
-        character.setCollectionSet(collectionSet);
         try {
+            collectionSet.addCharacter(character);
             characterService.saveCharacter(character);
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("error", "Un personnage avec ce nom existe déjà !");

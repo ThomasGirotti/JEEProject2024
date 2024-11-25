@@ -23,7 +23,7 @@ public class Character {
     @Column(nullable = false)
     private String imagePath;
     @Column(nullable = false)
-    private int value;
+    private int price;
     @Column(nullable = false)
     private int claimCount;
     @Column(nullable = false)
@@ -35,10 +35,10 @@ public class Character {
     public Character() {
     }
     
-    public Character(String name, String imagePath, int value, int claimCount, int likeCount, CollectionSet collectionSet) {
+    public Character(String name, String imagePath, int price, int claimCount, int likeCount, CollectionSet collectionSet) {
         this.name = name;
         this.imagePath = imagePath;
-        this.value = value;
+        this.price = price;
         this.claimCount = claimCount;
         this.likeCount = likeCount;
         this.collectionSet = collectionSet;
@@ -64,12 +64,12 @@ public class Character {
         this.imagePath = imagePath;
     }
     
-    public int getValue() {
-        return value;
+    public int getPrice() {
+        return price;
     }
     
-    public void setValue(int value) {
-        this.value = value;
+    public void setPrice(int price) {
+        this.price = price;
     }
     
     public int getClaimCount() {
