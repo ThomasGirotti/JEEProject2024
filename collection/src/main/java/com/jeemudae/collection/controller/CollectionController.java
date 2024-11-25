@@ -52,14 +52,14 @@ public class CollectionController {
     }
 
     @PostMapping("/collection/add")
-    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") Short price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") Long claimCount, @RequestParam("likeCount") Long likeCount, Model model) {
+    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
         
         String filename = null;
         if (image != null && !image.isEmpty()) {
-            filename = fileStorageService.store(image); // Sauvegarder l'image
+            filename = fileStorageService.store(image);
         }
         Character character = new Character();
         character.setName(name);

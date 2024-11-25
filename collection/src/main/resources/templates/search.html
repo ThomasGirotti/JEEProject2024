@@ -8,7 +8,7 @@
     <div th:if="${errorMessage}" style="color: red;">
         <p th:text="${errorMessage}"></p>
     </div>
-    <form th:action="@{/collection}" method="get">
+    <form th:action="@{/profile}" method="get">
         <label for="username">Nom d'utilisateur :</label>
         <input type="text" id="username" name="username" placeholder="Entrer un nom d'utilisateur" required>
         <button type="submit">Rechercher</button>

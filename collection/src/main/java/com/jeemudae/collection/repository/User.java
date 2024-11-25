@@ -1,6 +1,8 @@
 package com.jeemudae.collection.repository;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -8,6 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -26,6 +31,30 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Character> characters;
+
+    @ManyToMany
+    @JoinTable(
+        name = "user_follow",
+        joinColumns = @JoinColumn(name = "follower_id"),
+        inverseJoinColumns = @JoinColumn(name = "following_id")
+    )
+    private Set<User> following = new HashSet<>();
+
+    @ManyToMany(mappedBy = "following")
+    private Set<User> followers = new HashSet<>();
+
+    @Column(nullable = false)
+    private int cash;
+
+    public User() {
+        this.cash = 0;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.cash = 0;
+    }
 
     public Long getId() {
         return id;
@@ -57,5 +86,31 @@ public class User {
 
     public void setCharacters(List<Character> characters) {
         this.characters = characters;
+    }
+
+    public void follow(User user) {
+        this.following.add(user);
+        user.getFollowers().add(this);
+    }
+    
+    public void unfollow(User user) {
+        this.following.remove(user);
+        user.getFollowers().remove(this);
+    }
+    
+    public Set<User> getFollowing() {
+        return following;
+    }
+
+    public Set<User> getFollowers() {
+        return followers;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public void updateCash(int cash) {
+        this.cash = cash + this.cash;
     }
 }

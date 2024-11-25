@@ -21,9 +21,9 @@ public class Character {
     @Column(nullable = false)
     private String name;
     private String imagePath;
-    private Short price;
-    private Long claimCount;
-    private Long likeCount;
+    private int price;
+    private int claimCount;
+    private int likeCount;
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -31,7 +31,7 @@ public class Character {
     public Character() {
     }
     
-    public Character(String name, String imagePath, Short price, Long claimCount, Long likeCount) {
+    public Character(String name, String imagePath, int price, int claimCount, int likeCount) {
         this.name = name;
         this.imagePath = imagePath;
         this.price = price;
@@ -59,27 +59,27 @@ public class Character {
         this.imagePath = imagePath;
     }
     
-    public Short getPrice() {
+    public int getPrice() {
         return price;
     }
     
-    public void setPrice(Short price) {
+    public void setPrice(int price) {
         this.price = price;
     }
     
-    public Long getClaimCount() {
+    public int getClaimCount() {
         return claimCount;
     }
     
-    public void setClaimCount(Long claimCount) {
+    public void setClaimCount(int claimCount) {
         this.claimCount = claimCount;
     }
     
-    public Long getLikeCount() {
+    public int getLikeCount() {
         return likeCount;
     }
     
-    public void setLikeCount(Long likeCount) {
+    public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
     

@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Ma Collection</title>
+    <title>Collection </title>
 </head>
 <body>
     <h1>Collection de <span th:text="${user.username}"></span></h1>
-    <h1>
-        Hello <span sec:authentication="name"></span>!
-    </h1>
     <div th:if="${error}" style="color: red;">
         <p th:text="${error}"></p>
     </div>
@@ -43,5 +40,6 @@
         </form>
     </div>
     <a href="/">Retour à l'accueil</a>
+    <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}">Retour au profil</a>
 </body>
 </html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Profil de l'utilisateur</title>
+</head>
+<body>
+    <h1 th:text="'Profil de ' + ${user.username}"></h1>
+    <div th:if="${error}" style="color: red;">
+        <p th:text="${error}"></p>
+    </div>
+    <div th:if="${user.username != #authentication.name}">
+        <form th:action="@{/follow}" method="post" th:if="${!following}">
+            <input type="hidden" name="username" th:value="${user.username}">
+            <button type="submit">Suivre</button>
+        </form>
+        <form th:action="@{/unfollow}" method="post" th:if="${following}">
+            <input type="hidden" name="username" th:value="${user.username}">
+            <button type="submit">Ne plus suivre</button>
+        </form>
+    </div>
+    <a th:href="${user.username == #authentication.name} ? '/collection' : '/collection?username=' + ${user.username}">Voir la collection</a>
+    <a href="/">Retour à l'accueil</a>
+</body>
+</html>

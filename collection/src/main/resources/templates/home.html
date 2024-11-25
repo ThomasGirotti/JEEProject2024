@@ -6,6 +6,7 @@
 <body>
     <h1>Bienvenue sur le gestionnaire de collection</h1>
     <div sec:authorize="isAuthenticated()">
+        <a href="/profile">Voir mon profil</a>
         <a href="/collection">Voir ma collection</a>
         <a href="/search">Rechercher un utilisateur</a>
         <form th:action="@{/logout}" method="post">
