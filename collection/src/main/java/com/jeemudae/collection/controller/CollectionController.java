@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeemudae.collection.repository.Character;
+import com.jeemudae.collection.repository.CollectionSet;
 import com.jeemudae.collection.repository.User;
 import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
@@ -52,22 +53,22 @@ public class CollectionController {
     }
 
     @PostMapping("/collection/add")
-    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
+    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int value, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        
+        CollectionSet collectionSet = currentUser.getCollectionSet();
         String filename = null;
         if (image != null && !image.isEmpty()) {
             filename = fileStorageService.store(image);
         }
         Character character = new Character();
         character.setName(name);
-        character.setPrice(price);
+        character.setValue(value);
         character.setImagePath(filename);
         character.setClaimCount(claimCount);
         character.setLikeCount(likeCount);
-        character.setUser(currentUser);
+        character.setCollectionSet(collectionSet);
         try {
             characterService.saveCharacter(character);
         } catch (DataIntegrityViolationException e) {
