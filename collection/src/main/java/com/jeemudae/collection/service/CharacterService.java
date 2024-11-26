@@ -9,6 +9,8 @@ import com.jeemudae.collection.repository.CharacterRepository;
 import com.jeemudae.collection.repository.CollectionSet;
 import com.jeemudae.collection.repository.User;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class CharacterService {
     private final CharacterRepository characterRepository;
@@ -22,17 +24,15 @@ public class CharacterService {
         return characterRepository.findByCollectionSet(collectionSet);
     }
 
-    public void saveCharacter(Character character) {
-        CollectionSet collectionSet = character.getCollectionSet();
+    @Transactional
+    public void saveCharacter(CollectionSet collectionSet, Character character) {
+        collectionSet.addCharacter(character);
         characterRepository.save(character);
-        collectionSet.recalculateTotalValue();
     }
 
-    public void deleteCharacter(Character character) {
-        CollectionSet collectionSet = character.getCollectionSet();
+    @Transactional
+    public void deleteCharacter(CollectionSet collectionSet, Character character) {
+        collectionSet.removeCharacter(character);
         characterRepository.delete(character);
-        if (collectionSet != null) {
-            collectionSet.recalculateTotalValue();
-        }
     }
 }

@@ -70,8 +70,7 @@ public class CollectionController {
         character.setClaimCount(claimCount);
         character.setLikeCount(likeCount);
         try {
-            collectionSet.addCharacter(character);
-            characterService.saveCharacter(character);
+            characterService.saveCharacter(collectionSet, character);
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("error", "Un personnage avec ce nom existe déjà !");
             model.addAttribute("characters", characterService.getCharactersForUser(currentUser));

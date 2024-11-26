@@ -1,10 +1,12 @@
 package com.jeemudae.collection.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,8 +26,8 @@ public class CollectionSet {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "collectionSet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Character> characters;
+    @OneToMany(mappedBy = "collectionSet", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Character> characters = new ArrayList<>();
 
     @Column(nullable = false)
     private int totalValue;
@@ -78,5 +80,5 @@ public class CollectionSet {
             character.setCollectionSet(null);
             recalculateTotalValue();
         }
-    }    
+    }
 }
