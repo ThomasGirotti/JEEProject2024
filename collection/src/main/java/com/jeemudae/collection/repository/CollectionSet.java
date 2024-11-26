@@ -61,10 +61,26 @@ public class CollectionSet {
         return totalValue;
     }
 
-    public void recalculateTotalValue() {
-        this.totalValue = characters.stream().mapToInt(Character::getPrice).sum();
-        System.out.println("Total value recalculated: " + totalValue);
+    public void setTotalValue(int totalValue) {
+        this.totalValue = totalValue;
     }
+
+    public void recalculateTotalValue() {
+        if (characters == null) {
+            System.out.println("Characters list is null!");
+            return;
+        }
+    
+        int sum = characters.stream()
+                            .mapToInt(character -> {
+                                System.out.println("Character price: " + character.getPrice());
+                                return character.getPrice();
+                            })
+                            .sum();
+        setTotalValue(sum);
+        System.out.println("Total value recalculated: " + sum);
+    }
+    
 
     public void addCharacter(Character character) {
         if (characters != null) {

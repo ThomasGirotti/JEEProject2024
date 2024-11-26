@@ -1,4 +1,4 @@
-# TODO list
+# TODO list des features
 
 - ✅ Demande de follow
 - ✅ Consulter les autres profils
@@ -12,3 +12,35 @@
 - ❌ Hotel des ventes
 - ❌ Top characters (valeur) + tri potentiel
 - ❌ Top joueurs (valeur) + tri potentiel
+
+## Page Home 🔄
+
+- 🔄 Header connexion/création de compte
+
+## Page Connexion 🔄
+
+- ✅ Formulaire de connexion
+- ✅ Lien vers la page de création de compte
+
+## Page Création de compte 🔄
+
+- ✅ Formulaire de création de compte
+- ✅ Lien vers la page de connexion
+
+## Page Profile 🔄
+
+- Informations du joueur
+- ❌ Cash du joueur
+- ❌ Value de la collection
+- ✅ Lien vers la page de collection
+- ✅ Bouton de follow
+
+## Page Collection 🔄
+
+- ✅ Liste des characters du joueur
+- ❌ Bouton de vente
+- ❌ Bouton de tri
+
+## Page Search 🔄
+
+- ✅ Barre de recherche
