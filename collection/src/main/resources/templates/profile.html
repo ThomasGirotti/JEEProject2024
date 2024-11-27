@@ -10,9 +10,9 @@
     </div>
     <h2>Informations</h2>
     <p th:text="${user.cash != null ? 'Cash: ' + user.cash : 'Cash is null'}"></p>
-<!--     <p th:text="Valeur de la collection : ${collectionSet.totalValue}"></p>
- --><!--     <p th:text="Nombre de cartes dans la collection : ${user.collectionSize}"></p>
-    <p th:text="ranking : ${user.ranking}"></p> -->
+    <p th:text="${collectionSet.totalValue != null ? 'Valeur de la collection: ' + collectionSet.totalValue : 'Collection value is null'}"></p>
+    <p th:text="${collectionSet.collectionSize != null ? 'Nombre de cartes dans la collection : ' + collectionSet.collectionSize : 'Collection size is null'}"></p>
+<!--    <p th:text="ranking : ${user.ranking}"></p> -->
     <div th:if="${user.username != #authentication.name}">
         <form th:action="@{/follow}" method="post" th:if="${!following}">
             <input type="hidden" name="username" th:value="${user.username}">

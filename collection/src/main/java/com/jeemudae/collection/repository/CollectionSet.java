@@ -32,6 +32,9 @@ public class CollectionSet {
     @Column(nullable = false)
     private int totalValue;
 
+    @Column(nullable = false)
+    private int collectionSize;
+
     public CollectionSet() {
         this.totalValue = 0;
     }
@@ -57,6 +60,10 @@ public class CollectionSet {
         return characters;
     }
 
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
+    }
+
     public int getTotalValue() {
         return totalValue;
     }
@@ -65,28 +72,39 @@ public class CollectionSet {
         this.totalValue = totalValue;
     }
 
+    public int getCollectionSize() {
+        return collectionSize;
+    }
+
+    public void setCollectionSize(int collectionSize) {
+        this.collectionSize = collectionSize;
+    }
+
     public void recalculateTotalValue() {
         if (characters == null) {
             System.out.println("Characters list is null!");
             return;
         }
-    
-        int sum = characters.stream()
-                            .mapToInt(character -> {
-                                System.out.println("Character price: " + character.getPrice());
-                                return character.getPrice();
-                            })
-                            .sum();
+        int sum = characters.stream().mapToInt(character -> {System.out.println("Character price: " + character.getPrice());return character.getPrice();}).sum();
         setTotalValue(sum);
         System.out.println("Total value recalculated: " + sum);
     }
-    
+
+    public void recalculateCollectionSize() {
+        if (characters == null) {
+            System.out.println("Characters list is null!");
+            return;
+        }
+        setCollectionSize(characters.size());
+        System.out.println("Collection size recalculated: " + characters.size());
+    }
 
     public void addCharacter(Character character) {
         if (characters != null) {
             characters.add(character);
             character.setCollectionSet(this);
             recalculateTotalValue();
+            recalculateCollectionSize();
         }
     }
     
@@ -95,6 +113,7 @@ public class CollectionSet {
             characters.remove(character);
             character.setCollectionSet(null);
             recalculateTotalValue();
+            recalculateCollectionSize();
         }
     }
 }
