@@ -1,7 +1,6 @@
 package com.jeemudae.collection.repository;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -13,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,8 +28,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Character> characters;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CollectionSet collectionSet;
 
     @ManyToMany
     @JoinTable(
@@ -38,9 +37,11 @@ public class User {
         joinColumns = @JoinColumn(name = "follower_id"),
         inverseJoinColumns = @JoinColumn(name = "following_id")
     )
+    @SuppressWarnings("FieldMayBeFinal")
     private Set<User> following = new HashSet<>();
 
     @ManyToMany(mappedBy = "following")
+    @SuppressWarnings("FieldMayBeFinal")
     private Set<User> followers = new HashSet<>();
 
     @Column(nullable = false)
@@ -48,20 +49,18 @@ public class User {
 
     public User() {
         this.cash = 0;
+        this.collectionSet = new CollectionSet(this);
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.cash = 0;
+        this.collectionSet = new CollectionSet(this);
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -80,12 +79,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Character> getCharacters() {
-        return characters;
+    public CollectionSet getCollectionSet() {
+        return collectionSet;
     }
 
-    public void setCharacters(List<Character> characters) {
-        this.characters = characters;
+    public void setCollectionSet(CollectionSet collectionSet) {
+        this.collectionSet = collectionSet;
     }
 
     public void follow(User user) {

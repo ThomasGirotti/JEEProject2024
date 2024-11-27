@@ -19,6 +19,7 @@ public class UserService {
         return currentUser.getFollowing().contains(profileUser);
     }
 
+    @Transactional
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé : " + username));

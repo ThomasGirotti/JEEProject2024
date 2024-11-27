@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeemudae.collection.repository.Character;
+import com.jeemudae.collection.repository.CollectionSet;
 import com.jeemudae.collection.repository.User;
 import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
@@ -55,8 +56,9 @@ public class CollectionController {
     public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
-        User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        
+        User currentUser = userRepository.findByUsername(currentUsername)
+        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
+        CollectionSet collectionSet = currentUser.getCollectionSet();
         String filename = null;
         if (image != null && !image.isEmpty()) {
             filename = fileStorageService.store(image);
@@ -67,9 +69,8 @@ public class CollectionController {
         character.setImagePath(filename);
         character.setClaimCount(claimCount);
         character.setLikeCount(likeCount);
-        character.setUser(currentUser);
         try {
-            characterService.saveCharacter(character);
+            characterService.saveCharacter(collectionSet, character);
         } catch (DataIntegrityViolationException e) {
             model.addAttribute("error", "Un personnage avec ce nom existe déjà !");
             model.addAttribute("characters", characterService.getCharactersForUser(currentUser));

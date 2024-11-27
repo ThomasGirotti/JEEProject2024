@@ -10,15 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jeemudae.collection.repository.User;
-import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.UserService;
 
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
     
     @GetMapping("/profile")
     public String viewProfile(@RequestParam(value = "username", required = false) String username, Model model) {
@@ -34,6 +31,7 @@ public class UserController {
             following = userService.isUserFollowing(currentUsername, username);
         }
         model.addAttribute("user", userToDisplay);
+        model.addAttribute("collectionSet", userToDisplay.getCollectionSet());
         model.addAttribute("following", following);
         return "profile";
     }
@@ -51,7 +49,6 @@ public class UserController {
     public String unfollowUser(@RequestParam("username") String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
-
         userService.unfollowUser(currentUsername, username);
         return "redirect:/profile?username=" + username;
     }
@@ -60,7 +57,6 @@ public class UserController {
     public String getFollowingList(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
-
         User currentUser = userService.getUserByUsername(currentUsername);
         model.addAttribute("following", currentUser.getFollowing());
         return "following";
