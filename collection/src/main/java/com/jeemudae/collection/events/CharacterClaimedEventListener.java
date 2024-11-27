@@ -22,12 +22,10 @@ public class CharacterClaimedEventListener {
     @EventListener
     public void handleCharacterClaimed(CharacterClaimedEvent event) {
         Character claimedCharacter = event.getCharacter();
-        
         List<CollectionSet> allCollections = collectionSetRepository.findAll();
         for (CollectionSet collection : allCollections) {
             collection.recalculateTotalValue();
         }
-
         collectionSetRepository.saveAll(allCollections);
         System.out.println("Recalcul des collections terminé après le claim de : " + claimedCharacter.getName());
     }
