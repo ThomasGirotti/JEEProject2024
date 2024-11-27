@@ -31,7 +31,6 @@ public class UserController {
             following = userService.isUserFollowing(currentUsername, username);
         }
         model.addAttribute("user", userToDisplay);
-        System.out.println("User cash: " + userToDisplay.getCash());
         model.addAttribute("collectionSet", userToDisplay.getCollectionSet());
         model.addAttribute("following", following);
         return "profile";

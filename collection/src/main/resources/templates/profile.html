@@ -9,7 +9,7 @@
         <p th:text="${error}"></p>
     </div>
     <h2>Informations</h2>
-    <p th:text="Cash de l'utilisateur : ${user.cash}"></p>
+    <p th:text="${user.cash != null ? 'Cash: ' + user.cash : 'Cash is null'}"></p>
 <!--     <p th:text="Valeur de la collection : ${collectionSet.totalValue}"></p>
  --><!--     <p th:text="Nombre de cartes dans la collection : ${user.collectionSize}"></p>
     <p th:text="ranking : ${user.ranking}"></p> -->
