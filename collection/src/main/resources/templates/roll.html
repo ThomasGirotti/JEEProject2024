@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roll des Personnages</title>
+</head>
+<body>
+    <h1>Roll des Personnages</h1>
+    <div th:if="${error}">
+        <p th:text="${error}" style="color: red;"></p>
+    </div>
+    <div th:if="${characters}">
+        <h2>Résultats du Roll</h2>
+        <ul>
+            <li th:each="character : ${characters}">
+                <img th:src="@{/images/{image}(image=${character.imagePath})}" alt="Character Image" width="100">
+                <p th:text="${character.name}"></p>
+                <p th:text="${character.price}">Prix: </p>
+                <form th:action="@{/roll/claim}" method="post">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <button type="submit">Claim</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <div th:if="${characters == null}">
+        <p>Faites un roll pour découvrir des personnages !</p>
+    </div>
+</body>
+</html>
