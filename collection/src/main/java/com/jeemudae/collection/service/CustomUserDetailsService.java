@@ -1,8 +1,11 @@
 package com.jeemudae.collection.service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,10 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Utilisateur non trouvé");
         }
         User foundUser = user.get();
+
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + foundUser.getRole().name());
         return org.springframework.security.core.userdetails.User
                 .withUsername(foundUser.getUsername())
                 .password(foundUser.getPassword())
-                .roles("USER")
+                .authorities(Collections.singleton(authority))
                 .build();
     }
 

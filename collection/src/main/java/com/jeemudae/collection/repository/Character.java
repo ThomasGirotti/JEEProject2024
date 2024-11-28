@@ -20,16 +20,13 @@ public class Character {
     private Long id;
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String imagePath;
     @Column(nullable = false)
     private int price;
-    @Column(nullable = false)
-    private int claimCount;
-    @Column(nullable = false)
-    private int likeCount;
     @ManyToOne
-    @JoinColumn(name = "collection_set_id", nullable = false)
+    @JoinColumn(name = "collection_set_id")
     private CollectionSet collectionSet;
     
     public Character() {
@@ -39,8 +36,6 @@ public class Character {
         this.name = name;
         this.imagePath = imagePath;
         this.price = price;
-        this.claimCount = claimCount;
-        this.likeCount = likeCount;
         this.collectionSet = collectionSet;
     }
     
@@ -70,22 +65,6 @@ public class Character {
     
     public void setPrice(int price) {
         this.price = price;
-    }
-    
-    public int getClaimCount() {
-        return claimCount;
-    }
-    
-    public void setClaimCount(int claimCount) {
-        this.claimCount = claimCount;
-    }
-    
-    public int getLikeCount() {
-        return likeCount;
-    }
-    
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
     }
 
     public CollectionSet getCollectionSet() {

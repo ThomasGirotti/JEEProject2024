@@ -6,6 +6,8 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,6 +30,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private CollectionSet collectionSet;
 
@@ -48,6 +54,7 @@ public class User {
     private int cash;
 
     public User() {
+        this.role = Role.USER;
         this.cash = 0;
         this.collectionSet = new CollectionSet(this);
     }
@@ -55,6 +62,7 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.role = Role.USER;
         this.cash = 0;
         this.collectionSet = new CollectionSet(this);
     }
@@ -111,5 +119,17 @@ public class User {
 
     public void updateCash(int cash) {
         this.cash = cash + this.cash;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
     }
 }

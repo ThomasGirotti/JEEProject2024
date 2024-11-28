@@ -25,24 +25,28 @@ public class CharacterService {
         this.eventPublisher = eventPublisher;
     }
 
+    public List<Character> getAllCharacters() {
+        return characterRepository.findAll();
+    }
+
     public List<Character> getCharactersForUser(User user) {
         CollectionSet collectionSet = user.getCollectionSet();
         return characterRepository.findByCollectionSet(collectionSet);
     }
 
     @Transactional
-    public void saveCharacter(CollectionSet collectionSet, Character character) {
-        collectionSet.addCharacter(character);
+    public void saveCharacter(Character character) {
         characterRepository.save(character);
-        collectionSetRepository.save(collectionSet);
         //eventPublisher.publishEvent(new CharacterClaimedEvent(character)); //TODO: Event to maintain collection value across all users
     }
 
     @Transactional
-    public void deleteCharacter(CollectionSet collectionSet, Character character) {
-        collectionSet.removeCharacter(character);
+    public void deleteCharacter(Character character) {
         characterRepository.delete(character);
-        collectionSetRepository.save(collectionSet);
         //eventPublisher.publishEvent(new CharacterClaimedEvent(character)); //TODO: Event to maintain collection value across all users
+    }
+
+    public void deleteCharacterById(Long characterId) {
+        characterRepository.deleteById(characterId);
     }
 }

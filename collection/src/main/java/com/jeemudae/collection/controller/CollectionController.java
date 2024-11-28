@@ -2,30 +2,22 @@ package com.jeemudae.collection.controller;
 
 import java.util.Optional;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.jeemudae.collection.repository.Character;
-import com.jeemudae.collection.repository.CollectionSet;
 import com.jeemudae.collection.repository.User;
 import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
-import com.jeemudae.collection.service.FileStorageService;
 @Controller
 public class CollectionController {
-    private final FileStorageService fileStorageService;
     private final CharacterService characterService;
     private final UserRepository userRepository;
 
-    public CollectionController(FileStorageService fileStorageService, CharacterService characterService, UserRepository userRepository) {
-        this.fileStorageService = fileStorageService;
+    public CollectionController(CharacterService characterService, UserRepository userRepository) {
         this.characterService = characterService;
         this.userRepository = userRepository;
     }
@@ -50,32 +42,5 @@ public class CollectionController {
         model.addAttribute("user", user);
         model.addAttribute("characters", characterService.getCharactersForUser(user));
         return "collection";
-    }
-
-    @PostMapping("/collection/add")
-    public String addCharacter(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("image") MultipartFile image, @RequestParam("claimCount") int claimCount, @RequestParam("likeCount") int likeCount, Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        User currentUser = userRepository.findByUsername(currentUsername)
-        .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé"));
-        CollectionSet collectionSet = currentUser.getCollectionSet();
-        String filename = null;
-        if (image != null && !image.isEmpty()) {
-            filename = fileStorageService.store(image);
-        }
-        Character character = new Character();
-        character.setName(name);
-        character.setPrice(price);
-        character.setImagePath(filename);
-        character.setClaimCount(claimCount);
-        character.setLikeCount(likeCount);
-        try {
-            characterService.saveCharacter(collectionSet, character);
-        } catch (DataIntegrityViolationException e) {
-            model.addAttribute("error", "Un personnage avec ce nom existe déjà !");
-            model.addAttribute("characters", characterService.getCharactersForUser(currentUser));
-            return "collection";
-        }
-        return "redirect:/collection";
     }
 }
