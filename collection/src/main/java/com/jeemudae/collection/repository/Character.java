@@ -20,7 +20,7 @@ public class Character {
     private Long id;
     @Column(nullable = false)
     private String name;
-
+    
     @Column(nullable = false)
     private String imagePath;
     @Column(nullable = false)
@@ -66,11 +66,11 @@ public class Character {
     public void setPrice(int price) {
         this.price = price;
     }
-
+    
     public CollectionSet getCollectionSet() {
         return collectionSet;
     }
-
+    
     public void setCollectionSet(CollectionSet collectionSet) {
         this.collectionSet = collectionSet;
     }

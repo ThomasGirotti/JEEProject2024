@@ -6,10 +6,11 @@
 <body>
     <h1>Bienvenue sur le gestionnaire de collection</h1>
     <div sec:authorize="isAuthenticated()">
+        <a href="/roll">Page de roll</a>
         <a href="/profile">Voir mon profil</a>
         <a href="/collection">Voir ma collection</a>
         <a href="/search">Rechercher un utilisateur</a>
-        <a th:if="${user.authorities.contains('ROLE_ADMIN')}" href="/admin">Panneau Administrateur</a>
+        <a th:if="${isAdmin}" href="/admin">Panneau Administrateur</a>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Se déconnecter</button>
         </form>

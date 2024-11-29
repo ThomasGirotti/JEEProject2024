@@ -31,11 +31,10 @@
     <div th:if="${error}" class="error">
         <p th:text="${error}" style="color: red;"></p>
     </div>
-
-    <form th:action="@{/roll}" method="get">
+    <form th:action="@{/roll}" method="post">
         <button type="submit">Faire un Roll</button>
     </form>
-    <div th:if="${characters}">
+    <div th:if="${characters != null}" class="character-list">
         <h2>Résultats du Roll</h2>
         <div th:each="character : ${characters}" class="character">
             <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage">

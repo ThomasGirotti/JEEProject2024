@@ -30,6 +30,12 @@ public class RollController {
     }
 
     @GetMapping
+    public String showRollPage(Model model) {
+        model.addAttribute("characters", null);
+        return "roll";
+    }
+
+    @PostMapping
     public String rollPage(Model model, Authentication authentication) {
         User user = userService.getUserByUsername(authentication.getName());
         if (!userService.canRoll(user)) {

@@ -9,7 +9,6 @@ import com.jeemudae.collection.repository.Character;
 import com.jeemudae.collection.repository.CollectionSet;
 import com.jeemudae.collection.repository.CollectionSetRepository;
 import com.jeemudae.collection.repository.User;
-import com.jeemudae.collection.repository.Character;
 
 import jakarta.transaction.Transactional;
 

@@ -45,12 +45,13 @@ public class CharacterService {
     }
 
     @Transactional
-    public void deleteCharacter(Character character) {
-        characterRepository.delete(character);
-        //eventPublisher.publishEvent(new CharacterClaimedEvent(character)); //TODO: Event to maintain collection value across all users
-    }
-
     public void deleteCharacterById(Long characterId) {
-        characterRepository.deleteById(characterId);
+        CollectionSet collectionSet = collectionSetRepository.findByCharactersId(characterId);
+        Character character = characterRepository.findById(characterId).orElseThrow();
+        if (collectionSet != null) {
+            collectionSet.removeCharacter(character);
+            collectionSetRepository.save(collectionSet);
+        }
+        characterRepository.delete(character);
     }
 }

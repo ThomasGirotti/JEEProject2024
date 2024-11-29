@@ -4,9 +4,9 @@
     <title>Gestion Administrateur</title>
 </head>
 <body>
-    <h1>Nice</h1>
+    <h1>Accueil de gestion Administrateur</h1>
     <div sec:authorize="isAuthenticated()">
-        <a href="/characters">Gestion des personnages</a>
+        <a href="/admin/characters">Gestion base de donnée des personnages</a>
         <form th:action="@{/logout}" method="post">
             <button type="submit">Se déconnecter</button>
         </form>
