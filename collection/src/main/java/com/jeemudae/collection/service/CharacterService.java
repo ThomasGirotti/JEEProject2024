@@ -34,6 +34,10 @@ public class CharacterService {
         return characterRepository.findByCollectionSet(collectionSet);
     }
 
+    public Character getCharacterById(Long characterId) {
+        return characterRepository.findById(characterId).orElse(null);
+    }
+
     @Transactional
     public void saveCharacter(Character character) {
         characterRepository.save(character);

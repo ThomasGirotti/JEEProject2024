@@ -32,7 +32,7 @@ public class Character {
     public Character() {
     }
     
-    public Character(String name, String imagePath, int price, int claimCount, int likeCount, CollectionSet collectionSet) {
+    public Character(String name, String imagePath, int price, CollectionSet collectionSet) {
         this.name = name;
         this.imagePath = imagePath;
         this.price = price;

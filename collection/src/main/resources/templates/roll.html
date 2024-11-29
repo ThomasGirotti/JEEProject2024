@@ -14,7 +14,7 @@
         <h2>Résultats du Roll</h2>
         <ul>
             <li th:each="character : ${characters}">
-                <img th:src="@{/images/{image}(image=${character.imagePath})}" alt="Character Image" width="100">
+                <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" width="100">
                 <p th:text="${character.name}"></p>
                 <p th:text="${character.price}">Prix: </p>
                 <form th:action="@{/roll/claim}" method="post">

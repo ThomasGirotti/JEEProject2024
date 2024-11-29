@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.jeemudae.collection.repository.Character;
 import com.jeemudae.collection.repository.User;
 import com.jeemudae.collection.service.CharacterService;
 import com.jeemudae.collection.service.RollService;
