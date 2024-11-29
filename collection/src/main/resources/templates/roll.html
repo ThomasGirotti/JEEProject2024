@@ -4,28 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Roll des Personnages</title>
+    <style>
+        .character-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .character {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            width: 150px;
+        }
+        .character img {
+            width: 100%;
+            height: auto;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Roll des Personnages</h1>
-    <div th:if="${error}">
+    <div th:if="${error}" class="error">
         <p th:text="${error}" style="color: red;"></p>
     </div>
+
+    <form th:action="@{/roll}" method="get">
+        <button type="submit">Faire un Roll</button>
+    </form>
     <div th:if="${characters}">
         <h2>Résultats du Roll</h2>
-        <ul>
-            <li th:each="character : ${characters}">
-                <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" width="100">
-                <p th:text="${character.name}"></p>
-                <p th:text="${character.price}">Prix: </p>
-                <form th:action="@{/roll/claim}" method="post">
-                    <input type="hidden" name="characterId" th:value="${character.id}">
-                    <button type="submit">Claim</button>
-                </form>
-            </li>
-        </ul>
+        <div th:each="character : ${characters}" class="character">
+            <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage">
+            <h3 th:text="${character.name}"></h3>
+            <p>Prix : <span th:text="${character.price}"></span></p>
+            <form th:action="@{/roll/claim}" method="post">
+                <input type="hidden" name="characterId" th:value="${character.id}">
+                <button type="submit">Claim</button>
+            </form>
+        </div>
     </div>
     <div th:if="${characters == null}">
-        <p>Faites un roll pour découvrir des personnages !</p>
+        <p>Appuyez sur le bouton pour découvrir des personnages !</p>
     </div>
 </body>
 </html>

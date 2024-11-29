@@ -52,6 +52,7 @@ public class RollController {
         Character character = characterService.getCharacterById(characterId);
         rollService.claimCharacter(user, character);
         userService.updateClaimTime(user); // Met à jour l'heure de claim
+        model.addAttribute("success", "Vous avez claim le personnage : " + character.getName());
         return "redirect:/collection";
     }
 }
