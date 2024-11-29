@@ -2,8 +2,9 @@
 
 - ✅ Demande de follow
 - ✅ Consulter les autres profils
-- 🔄 Ajouter characters (admin)
-- 🔄 Remove characters (admin)
+- ✅ Ajouter characters (admin)
+- ✅ Remove characters (admin)
+- 🔄 Page de rolls
 - ❌ Page de rolls commune
 - ✅ Monnaie (cash)
 - ❌ Trier collection
@@ -49,5 +50,11 @@
 ## Page Admin Character 🔄
 
 - ✅ Informations du character
-- 🔄 Bouton add character
-- 🔄 Bouton de suppression
+- ✅ Bouton add character
+- ✅ Bouton de suppression
+
+## Page de Roll 🔄
+
+- ✅ Bouton de roll
+- ✅ Affichage des characters
+- 🔄 Gestion des characters deja claim

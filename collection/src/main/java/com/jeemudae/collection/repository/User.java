@@ -1,5 +1,6 @@
 package com.jeemudae.collection.repository;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,6 +37,12 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private CollectionSet collectionSet;
+
+    @Column(nullable = true)
+    private LocalDateTime lastRollTime;
+
+    @Column(nullable = true)
+    private LocalDateTime lastClaimTime;
 
     @ManyToMany
     @JoinTable(
@@ -131,5 +138,21 @@ public class User {
 
     public boolean isAdmin() {
         return this.role == Role.ADMIN;
+    }
+
+    public LocalDateTime getLastRollTime() {
+        return lastRollTime;
+    }
+
+    public void setLastRollTime(LocalDateTime lastRollTime) {
+        this.lastRollTime = lastRollTime;
+    }
+
+    public LocalDateTime getLastClaimTime() {
+        return lastClaimTime;
+    }
+
+    public void setLastClaimTime(LocalDateTime lastClaimTime) {
+        this.lastClaimTime = lastClaimTime;
     }
 }

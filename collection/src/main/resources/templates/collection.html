@@ -13,9 +13,7 @@
             <strong th:text="${character.name}"></strong>: 
             <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
             <br>
-            Prix : <span th:text="${character.price}"></span> |
-            Rang Claim : <span th:text="${character.claimCount}"></span> |
-            Rang Like : <span th:text="${character.likeCount}"></span>
+            Prix : <span th:text="${character.price}"></span>
         </li>
     </ul>
     <a href="/">Retour à l'accueil</a>

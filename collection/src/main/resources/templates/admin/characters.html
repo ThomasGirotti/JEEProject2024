@@ -14,6 +14,13 @@
             <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
             <br>
             Prix : <span th:text="${character.price}"></span>
+            <br>
+            Claimed : <span th:text="${character.collectionSet != null ? 'Oui' : 'Non'}"></span>
+            <br>
+            <form th:action="@{/admin/characters/delete}" method="post">
+                <input type="hidden" name="characterId" th:value="${character.id}">
+                <button type="submit">Supprimer</button>
+            </form>
         </li>
     </ul>
     <form th:action="@{/admin/characters/add}" method="post" enctype="multipart/form-data">
