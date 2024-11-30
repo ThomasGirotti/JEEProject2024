@@ -15,8 +15,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="user : ${topUsers}">
-                
+            <tr th:each="user, iterStat : ${topUsers}">
+                <td th:text="${iterStat.index + 1}"></td>
                 <td th:text="${user.username}"></td>
                 <td th:text="${user.collectionSet.totalValue}"></td>
             </tr>
