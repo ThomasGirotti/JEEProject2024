@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Classement des joueurs</title>
+</head>
+<body>
+    <h1>Classement des joueurs par valeur de collection</h1>
+    <table border="1" cellpadding="10" style="border-collapse: collapse; text-align: left; width: 100%;">
+        <thead>
+            <tr>
+                <th>Rang</th>
+                <th>Nom</th>
+                <th>Valeur totale de la collection</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="user : ${topUsers}">
+                
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.collectionSet.totalValue}"></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="/" style="text-decoration: none;">Retour à l'accueil</a>
+</body>
+</html>
