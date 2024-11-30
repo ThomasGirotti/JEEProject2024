@@ -32,6 +32,19 @@ public class Character {
     public Character() {
     }
     
+    @ManyToOne
+    @JoinColumn(name = "trade_id", nullable = true) // Ajoutez cette colonne
+    private Trade trade;
+
+    public Trade getTrade() {
+        return trade;
+    }
+
+    public void setTrade(Trade trade) {
+        this.trade = trade;
+    }
+
+
     public Character(String name, String imagePath, int price, CollectionSet collectionSet) {
         this.name = name;
         this.imagePath = imagePath;

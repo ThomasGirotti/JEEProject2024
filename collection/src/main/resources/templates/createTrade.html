@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Proposer un Trade</title>
+</head>
+<body>
+    <h1>Proposer un Trade</h1>
+    <form action="/createTrade" method="POST">
+        <h2>Choisir un personnage à échanger</h2>
+        <select name="characterId" required>
+            <option value="">Sélectionnez un personnage</option>
+            <th:block th:each="character : ${characters}">
+                <option th:value="${character.id}" th:text="${character.name}"></option>
+            </th:block>
+        </select>
+    
+        <!-- Champ caché pour envoyer le username -->
+        <input type="hidden" name="username" th:value="${username}" />
+    
+        <button type="submit">Proposer</button>
+    </form>
+    
+</body>
+</html>
