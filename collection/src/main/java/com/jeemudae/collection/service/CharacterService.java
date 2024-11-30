@@ -38,6 +38,12 @@ public class CharacterService {
         return characterRepository.findById(characterId).orElse(null);
     }
 
+    public List<Character> getAllCharactersSortedByPriceDesc() {
+        return characterRepository.findAllByOrderByPriceDesc(); 
+    }
+    
+    
+
     @Transactional
     public void saveCharacter(Character character) {
         characterRepository.save(character);
