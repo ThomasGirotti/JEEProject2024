@@ -28,7 +28,19 @@ public class Character {
     @ManyToOne
     @JoinColumn(name = "collection_set_id")
     private CollectionSet collectionSet;
-    
+
+    @Column(name = "in_trade", nullable = false, columnDefinition = "boolean default false")
+    private boolean inTrade;
+
+
+    public boolean isInTrade() {
+        return inTrade;
+    }
+
+    public void setInTrade(boolean inTrade) {
+        this.inTrade = inTrade;
+    }
+
     public Character() {
     }
     

@@ -6,7 +6,36 @@
 </head>
 <body>
     <h1>Proposer un Trade</h1>
-    <form action="/createTrade" method="POST">
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="character : ${charactersInTrade}">
+                <td th:text="${character.name}">Nom du personnage</td>
+
+                <td th:text="${character.price}">Prix</td>
+
+                <td>
+                    <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage"
+                         style="max-width: 100px; max-height: 100px; display: block;">
+                </td>
+
+                <td>
+                    <form method="post">
+                        <button type="submit" class="offer-btn">Proposer une offre</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <form action="/proposeTrade" method="POST">
         <h2>Choisir un personnage à échanger</h2>
         <select name="characterId" required>
             <option value="">Sélectionnez un personnage</option>
@@ -14,12 +43,7 @@
                 <option th:value="${character.id}" th:text="${character.name}"></option>
             </th:block>
         </select>
-    
-        <!-- Champ caché pour envoyer le username -->
-        <input type="hidden" name="username" th:value="${username}" />
-    
         <button type="submit">Proposer</button>
     </form>
-    
 </body>
 </html>

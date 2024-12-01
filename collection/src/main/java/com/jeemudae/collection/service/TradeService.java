@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeemudae.collection.repository.Character;
+import com.jeemudae.collection.repository.CharacterRepository;
 import com.jeemudae.collection.repository.Trade;
 import com.jeemudae.collection.repository.TradeRepository;
 import com.jeemudae.collection.repository.User;
@@ -17,6 +18,10 @@ public class TradeService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
+
 
     // Créer un trade pour un utilisateur
     public Trade createTradeForUser(Long userId) {
@@ -55,7 +60,21 @@ public class TradeService {
         tradeRepository.save(trade);
     }
 
-    // Désactiver un trade (exemple si un utilisateur annule son échange)
+    public void setCharacterInTrade(Long characterId, boolean inTrade) {
+        // Utilise CharacterRepository pour trouver le personnage
+        Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new RuntimeException("Personnage non trouvé : " + characterId));
+    
+        // Modifie l'état du champ inTrade
+        character.setInTrade(inTrade);
+    
+        // Utilise CharacterRepository pour sauvegarder l'entité mise à jour
+        characterRepository.save(character);
+    }
+    
+    
+
+    
     public void deactivateTrade(Long tradeId) {
         Trade trade = tradeRepository.findById(tradeId)
                 .orElseThrow(() -> new RuntimeException("Trade non trouvé"));

@@ -42,6 +42,9 @@ public class CharacterService {
         return characterRepository.findAllByOrderByPriceDesc(); 
     }
     
+    public List<Character> getCharactersInTrade() {
+        return characterRepository.findByInTrade(true); 
+    }
     
 
     @Transactional
