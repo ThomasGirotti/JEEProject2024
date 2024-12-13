@@ -2,33 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Collection</title>
-    <!-- Lien vers le fichier Tailwind CSS -->
-    <link rel="stylesheet" th:href="@{/css/output.css}">
-    <link rel="stylesheet" href="../static/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-bold text-indigo-600 mb-6">
-            Collection de <span th:text="${user.username}"></span>
-        </h1>
-        <div th:if="${error}" class="bg-red-100 text-red-700 p-4 rounded mb-4">
-            <p th:text="${error}"></p>
-        </div>
-        <ul class="space-y-4">
-            <li th:each="character : ${characters}" class="border rounded-lg p-4 flex items-center space-x-4">
-                <img th:src="@{'/uploads/' + ${character.imagePath}}" 
-                     alt="Image du personnage" 
-                     class="w-24 h-24 object-cover rounded-md">
-                <div>
-                    <strong th:text="${character.name}" class="text-lg font-semibold"></strong>
-                    <p class="text-sm text-gray-500">Prix : <span th:text="${character.price}"></span></p>
-                </div>
-            </li>
-        </ul>
-        <div class="mt-6">
-            <a href="/" class="text-indigo-500 hover:underline">Retour à l'accueil</a>
-            <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}" 
-               class="text-indigo-500 hover:underline ml-4">Retour au profil</a>
+<body class="bg-gray-900 text-gray-200">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
+            <h1 class="text-2xl font-bold mb-6 text-indigo-400">
+                Collection de <span th:text="${user.username}"></span>
+            </h1>
+            <div th:if="${error}" class="bg-red-100 text-red-700 p-4 rounded mb-4">
+                <p th:text="${error}"></p>
+            </div>
+            <ul class="space-y-4">
+                <li th:each="character : ${characters}" class="border border-gray-700 rounded-lg p-4 flex items-center space-x-4 bg-gray-700">
+                    <img th:src="@{'/uploads/' + ${character.imagePath}}" 
+                         alt="Image du personnage" 
+                         class="w-24 h-24 object-cover rounded-md">
+                    <div>
+                        <strong th:text="${character.name}" class="text-lg font-semibold text-gray-200"></strong>
+                        <p class="text-sm text-gray-400">Prix : <span th:text="${character.price}"></span></p>
+                    </div>
+                </li>
+            </ul>
+            <div class="mt-6">
+                <a href="/" class="text-indigo-400 hover:underline">Retour à l'accueil</a>
+                <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}" 
+                   class="text-indigo-400 hover:underline ml-4">Retour au profil</a>
+            </div>
         </div>
     </div>
 </body>
