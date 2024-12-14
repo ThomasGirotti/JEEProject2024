@@ -45,6 +45,7 @@ public class RollController {
             model.addAttribute("error", "Vous n'avez jamais effectué de rolls.");
         } else {
             model.addAttribute("characters", characters);
+            model.addAttribute("user", user);
         }
         return "roll";
     }
@@ -63,6 +64,7 @@ public class RollController {
             model.addAttribute("characters", user.getRolledCharacters());
             model.addAttribute("error", "Vous devez attendre pour faire un roll.");
         }
+        model.addAttribute("user", user);
         return "roll";
     }
     
@@ -81,9 +83,14 @@ public class RollController {
             }
         } else {
             if (character.getCollectionSet().getUser().getId().equals(user.getId())) {
-                rollService.boostCharacter(user, character);
-                model.addAttribute("success", "Personnage boosté avec succès.");
-                return "redirect:/collection";
+                if (userService.canBoost(user)) {
+                    rollService.boostCharacter(user, character);
+                    model.addAttribute("success", "Personnage boosté avec succès.");
+                    return "redirect:/collection";
+                } else {
+                    model.addAttribute("error", "Vous n'avez plus de boost disponible.");
+                    return "roll";
+                }
             } else {
                 model.addAttribute("error", "Ce personnage a déjà été claim par un autre utilisateur.");
                 return "roll";

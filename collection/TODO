@@ -8,7 +8,7 @@
 - ❌ Page de rolls commune
 - ✅ Monnaie (cash)
 - ❌ Trier collection
-- ❌ Vente de characters
+- ✅ Vente de characters
 - 🔄 Trade entre joueurs
 - ❌ Hotel des ventes
 - ✅ Top characters (valeur) + tri potentiel
@@ -17,6 +17,7 @@
 ## Page Home 🔄
 
 - 🔄 Header connexion/création de compte
+- 🔄 Boutons d accès aux sections
 
 ## Page Connexion 🔄
 
@@ -58,3 +59,4 @@
 - ✅ Bouton de roll
 - ✅ Affichage des characters
 - ✅ Gestion des characters deja claim
+- 🔄 CD des rolls et du boost
