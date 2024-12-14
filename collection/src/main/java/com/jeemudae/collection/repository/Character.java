@@ -29,34 +29,33 @@ public class Character {
     @ManyToOne
     @JoinColumn(name = "collection_set_id")
     private CollectionSet collectionSet;
-
+    
     @Column(name = "in_trade", nullable = false, columnDefinition = "boolean default false")
     private boolean inTrade;
-
+    
     public boolean isInTrade() {
         return inTrade;
     }
-
+    
     public void setInTrade(boolean inTrade) {
         this.inTrade = inTrade;
     }
-
+    
     public Character() {
     }
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trade_id", nullable = true) // Ajoutez cette colonne
     private Trade trade;
-
+    
     public Trade getTrade() {
         return trade;
     }
-
+    
     public void setTrade(Trade trade) {
         this.trade = trade;
     }
-
-
+    
     public Character(String name, String imagePath, int price, CollectionSet collectionSet) {
         this.name = name;
         this.imagePath = imagePath;

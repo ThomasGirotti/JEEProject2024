@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Proposer un Trade</title>
@@ -22,8 +22,7 @@
                 <td th:text="${character.name}">Nom du personnage</td>
                 <td th:text="${character.price}">Prix</td>
                 <td>
-                    <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage"
-                         style="max-width: 100px; max-height: 100px; display: block;">
+                    <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 100px; max-height: 100px; display: block;">
                 </td>
                 <td>
                     <form action="/proposerTrade" method="POST">
@@ -35,16 +34,15 @@
             
         </tbody>
     </table>
-
     <form action="/createTrade" method="POST">
         <h2>Choisir un personnage à échanger</h2>
         <select name="characterId" required>
             <option value="">Sélectionnez un personnage</option>
             <th:block th:each="character : ${characters}">
-                <option th:value="${character.id}" th:text="${character.name}"></option>
-            </th:block>
-        </select>
-        <button type="submit">Proposer</button>
-    </form>
+            <option th:value="${character.id}" th:text="${character.name}"></option>
+        </th:block>
+    </select>
+    <button type="submit">Proposer</button>
+</form>
 </body>
 </html>
