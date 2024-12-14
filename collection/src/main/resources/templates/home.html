@@ -5,9 +5,11 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-900 text-gray-200">
-    <div class="min-h-screen flex items-center justify-center">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-100">Bienvenue sur votre gestionnaire de collection</h1>
+        </div>
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
-            <h1 class="text-2xl font-bold mb-6">Bienvenue sur le gestionnaire de collection</h1>
             <div sec:authorize="isAuthenticated()" class="space-y-4">
                 <a href="/roll" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Page de roll</a>
                 <a href="/profile" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Voir mon profil</a>
