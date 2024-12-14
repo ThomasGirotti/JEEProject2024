@@ -1,7 +1,9 @@
 package com.jeemudae.collection.repository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -9,12 +11,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -43,6 +47,13 @@ public class User {
 
     @Column(nullable = true)
     private LocalDateTime lastClaimTime;
+
+    @Column(nullable = true)
+    private LocalDateTime lastBoostTime;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private List<Character> rolledCharacters = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -154,5 +165,21 @@ public class User {
 
     public void setLastClaimTime(LocalDateTime lastClaimTime) {
         this.lastClaimTime = lastClaimTime;
+    }
+
+    public LocalDateTime getLastBoostTime() {
+        return lastBoostTime;
+    }
+
+    public void setLastBoostTime(LocalDateTime lastBoostTime) {
+        this.lastBoostTime = lastBoostTime;
+    }
+
+    public List<Character> getRolledCharacters() {
+        return rolledCharacters;
+    }
+
+    public void setRolledCharacters(List<Character> rolledCharacters) {
+        this.rolledCharacters = rolledCharacters;
     }
 }

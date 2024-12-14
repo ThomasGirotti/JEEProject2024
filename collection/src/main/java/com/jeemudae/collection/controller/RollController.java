@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jeemudae.collection.repository.Character;
 import com.jeemudae.collection.repository.User;
+import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
 import com.jeemudae.collection.service.RollService;
 import com.jeemudae.collection.service.UserService;
@@ -20,46 +22,72 @@ import com.jeemudae.collection.service.UserService;
 @Controller
 @RequestMapping("/roll")
 public class RollController {
-
+    
     @Autowired
     private UserService userService;
-
+    
     @Autowired
     private RollService rollService;
-
+    
     @Autowired
     private CharacterService characterService;
-
+    
+    @Autowired
+    private UserRepository userRepository;
+    
     @GetMapping
     public String showRollPage(Model model) {
-        model.addAttribute("characters", null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername).get();
+        List<Character> characters = user.getRolledCharacters();
+        if (characters.isEmpty()) {
+            model.addAttribute("error", "Vous n'avez jamais effectué de rolls.");
+        } else {
+            model.addAttribute("characters", characters);
+        }
         return "roll";
     }
-
+    
     @PostMapping
     public String rollPage(Model model, Authentication authentication) {
         User user = userService.getUserByUsername(authentication.getName());
-        if (!userService.canRoll(user)) {
+        if (userService.canRoll(user)) {
+            List<Character> rolledCharacters = rollService.rollCharacters();
+            user.setRolledCharacters(rolledCharacters);
+            userService.updateRollTime(user);
+            userRepository.save(user);
+            System.out.println("Roll effectué et enregistré pour " + user.getUsername());
+            model.addAttribute("characters", rolledCharacters);
+        } else {
+            model.addAttribute("characters", user.getRolledCharacters());
             model.addAttribute("error", "Vous devez attendre pour faire un roll.");
-            return "roll";
         }
-        List<Character> rolledCharacters = rollService.rollCharacters(user);
-        userService.updateRollTime(user); // Met à jour l'heure de roll
-        model.addAttribute("characters", rolledCharacters);
         return "roll";
     }
-
+    
     @PostMapping("/claim")
     public String claimCharacter(@RequestParam("characterId") Long characterId, Authentication authentication, Model model) {
         User user = userService.getUserByUsername(authentication.getName());
-        if (!userService.canClaim(user)) {
-            model.addAttribute("error", "Vous devez attendre pour claim un personnage.");
-            return "roll";
-        }
         Character character = characterService.getCharacterById(characterId);
-        rollService.claimCharacter(user, character);
-        userService.updateClaimTime(user);
-        model.addAttribute("success", "Vous avez claim le personnage : " + character.getName());
-        return "redirect:/collection";
+        if (character.getCollectionSet() == null) {
+            if (userService.canClaim(user)) {
+                rollService.claimCharacter(user, character);
+                model.addAttribute("success", "Personnage claim avec succès.");
+                return "redirect:/collection";
+            } else {
+                model.addAttribute("error", "Vous n'avez plus de claim disponible.");
+                return "roll";
+            }
+        } else {
+            if (character.getCollectionSet().getUser().getId().equals(user.getId())) {
+                rollService.boostCharacter(user, character);
+                model.addAttribute("success", "Personnage boosté avec succès.");
+                return "redirect:/collection";
+            } else {
+                model.addAttribute("error", "Ce personnage a déjà été claim par un autre utilisateur.");
+                return "roll";
+            }
+        }
     }
 }

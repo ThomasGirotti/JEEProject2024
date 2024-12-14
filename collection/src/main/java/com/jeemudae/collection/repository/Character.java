@@ -30,6 +30,10 @@ public class Character {
     @JoinColumn(name = "collection_set_id")
     private CollectionSet collectionSet;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Character() {
     }
 
@@ -74,5 +78,13 @@ public class Character {
 
     public void setCollectionSet(CollectionSet collectionSet) {
         this.collectionSet = collectionSet;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
