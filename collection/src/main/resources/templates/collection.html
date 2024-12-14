@@ -6,16 +6,11 @@
 </head>
 <body class="bg-gray-900 text-gray-200">
     <div class="min-h-screen flex flex-col items-center justify-center">
-        <!-- En-tête -->
         <h1 class="text-4xl font-bold mb-6 text-gray-100">Collection de <span th:text="${user.username}"></span></h1>
-        
-        <!-- Conteneur principal -->
         <div class="bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-xl">
             <div th:if="${error}" class="bg-red-600 text-white p-2 rounded mb-4">
                 <p th:text="${error}"></p>
             </div>
-
-            <!-- Liste des personnages -->
             <div class="flex flex-col gap-4">
                 <div th:each="character : ${characters}" class="flex items-center gap-4 p-4 bg-gray-700 rounded-lg">
                     <img th:src="@{'/uploads/' + ${character.imagePath}}" 
@@ -27,8 +22,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Boutons de navigation -->
             <div class="mt-6 space-y-2">
                 <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}" 
                    class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour au profil</a>
