@@ -11,18 +11,42 @@
         </div>
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
             <div sec:authorize="isAuthenticated()" class="space-y-4">
-                <a href="/roll" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Page de roll</a>
-                <a href="/profile" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Voir mon profil</a>
-                <a href="/collection" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Voir ma collection</a>
-                <a href="/search" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Rechercher un utilisateur</a>
-                <a th:if="${isAdmin}" href="/admin" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Panneau Administrateur</a>
+                <a href="/roll" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-gray-300 transform hover:scale-105 transition duration-200 ease-in-out">
+                   Page de roll
+                </a>
+                <a href="/profile" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-gray-300 transform hover:scale-105 transition duration-200 ease-in-out">
+                   Voir mon profil
+                </a>
+                <a href="/collection" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-gray-300 transform hover:scale-105 transition duration-200 ease-in-out">
+                   Voir ma collection
+                </a>
+                <a href="/search" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-gray-300 transform hover:scale-105 transition duration-200 ease-in-out">
+                   Rechercher un utilisateur
+                </a>
+                <a th:if="${isAdmin}" href="/admin" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-red-800 transform hover:scale-105 transition duration-200 ease-in-out">
+                   Panneau Administrateur
+                </a>
                 <form th:action="@{/logout}" method="post" class="mt-4">
-                    <button type="submit" class="w-full py-2 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Se déconnecter</button>
+                    <button type="submit" 
+                            class="w-full py-2 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">
+                        Se déconnecter
+                    </button>
                 </form>
             </div>
             <div sec:authorize="isAnonymous()" class="mt-6 text-center">
-                <a href="/login" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mb-2">Se connecter</a>
-                <a href="/register" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Créer un compte</a>
+                <a href="/login" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mb-2">
+                   Se connecter
+                </a>
+                <a href="/register" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">
+                   Créer un compte
+                </a>
             </div>
         </div>
     </div>
