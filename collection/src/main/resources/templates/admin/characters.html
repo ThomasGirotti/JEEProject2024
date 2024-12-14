@@ -2,40 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Character management</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Ajouter un nouveau personnage</h1>
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
-    </div>
-    <ul>
-        <li th:each="character : ${characters}">
-            <strong th:text="${character.name}"></strong>: 
-            <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
-            <br>
-            Prix : <span th:text="${character.price}"></span>
-            <br>
-            Claimed : <span th:text="${character.collectionSet != null ? 'Oui' : 'Non'}"></span>
-            <br>
-            <form th:action="@{/admin/characters/delete}" method="post">
-                <input type="hidden" name="characterId" th:value="${character.id}">
-                <button type="submit">Supprimer</button>
+<body class="bg-gray-900 text-gray-200">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-100">Ajouter un nouveau personnage</h1>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
+            <div th:if="${error}" class="text-red-500 mb-4">
+                <p th:text="${error}"></p>
+            </div>
+            <ul class="space-y-4">
+                <li th:each="character : ${characters}" class="bg-gray-700 p-4 rounded-lg">
+                    <strong th:text="${character.name}" class="text-lg font-bold"></strong>: 
+                    <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="max-w-xs max-h-xs mt-2 mb-2">
+                    <br>
+                    Prix : <span th:text="${character.price}"></span>
+                    <br>
+                    Claimed : <span th:text="${character.collectionSet != null ? 'Oui' : 'Non'}"></span>
+                    <br>
+                    <form th:action="@{/admin/characters/delete}" method="post" class="mt-2">
+                        <input type="hidden" name="characterId" th:value="${character.id}">
+                        <button type="submit" class="py-2 px-4 bg-red-600 hover:bg-red-500 rounded text-gray-200">Supprimer</button>
+                    </form>
+                </li>
+            </ul>
+            <form th:action="@{/admin/characters/add}" method="post" enctype="multipart/form-data" class="mt-6 space-y-4">
+                <div>
+                    <label for="name" class="block text-sm font-medium">Nom :</label>
+                    <input type="text" id="name" name="name" required class="mt-1 p-2 w-full bg-gray-700 rounded text-gray-200">
+                </div>
+                <div>
+                    <label for="price" class="block text-sm font-medium">Prix :</label>
+                    <input type="number" id="price" name="price" required class="mt-1 p-2 w-full bg-gray-700 rounded text-gray-200">
+                </div>
+                <div>
+                    <label for="image" class="block text-sm font-medium">Image :</label>
+                    <input type="file" id="image" name="image" accept="image/*" required class="mt-1 p-2 w-full bg-gray-700 rounded text-gray-200">
+                </div>
+                <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded text-gray-200 font-semibold">Ajouter</button>
             </form>
-        </li>
-    </ul>
-    <form th:action="@{/admin/characters/add}" method="post" enctype="multipart/form-data">
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="price">Prix :</label>
-        <input type="number" id="price" name="price" required>
-        <br>
-        <label for="image">Image :</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
-        <br>
-        <button type="submit">+</button>
-    </form>
-    <a href="/admin">Retour au portail Administrateur</a>
-    <a href="/">Retour à l'accueil</a>
+            <div class="mt-6 space-y-2">
+                <a href="/admin" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour au portail Administrateur</a>
+                <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
 </body>
-</html>
+</html></div>

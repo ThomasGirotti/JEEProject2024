@@ -2,16 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Inscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Créer un compte</h1>
-    <form th:action="@{/register}" method="post">
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Mot de passe :</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">S'inscrire</button>
-    </form>
-    <p><a th:href="@{/login}">Retour à la connexion</a></p>
+<body class="bg-gray-900 text-gray-200">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-100">Bienvenue sur Budae</h1>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h1 class="text-2xl font-bold mb-6">Créer un compte</h1>
+            <form th:action="@{/register}" method="post">
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" class="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium">Mot de passe :</label>
+                    <input type="password" id="password" name="password" class="mt-1 p-2 w-full bg-gray-700 border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-gray-500" required>
+                </div>
+                <button type="submit" class="w-full py-2 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">S'inscrire</button>
+            </form>
+            <p class="mt-4 text-center"><a th:href="@{/login}" class="text-gray-400 hover:text-gray-300">Retour à la connexion</a></p>
+        </div>
+    </div>
 </body>
 </html>
+
