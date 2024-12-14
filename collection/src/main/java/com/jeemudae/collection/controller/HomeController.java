@@ -18,8 +18,10 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, Authentication authentication) {
-        User user = userService.getUserByUsername(authentication.getName());
-        model.addAttribute("isAdmin", user.isAdmin());
+        if (authentication != null) {
+            User user = userService.getUserByUsername(authentication.getName());
+            model.addAttribute("isAdmin", user.isAdmin());
+        }
         return "home";
     }
 }

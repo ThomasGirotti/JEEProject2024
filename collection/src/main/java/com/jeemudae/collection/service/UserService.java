@@ -78,5 +78,4 @@ public class UserService {
     public List<User> getTopUsersByCollectionValue() {
         return userRepository.findTopUsersByCollectionValue();
     }
-
 }

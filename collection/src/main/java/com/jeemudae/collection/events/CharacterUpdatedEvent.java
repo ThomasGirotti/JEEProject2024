@@ -2,10 +2,10 @@ package com.jeemudae.collection.events;
 
 import com.jeemudae.collection.repository.Character;
 
-public class CharacterClaimedEvent {
+public class CharacterUpdatedEvent {
     private final Character character;
 
-    public CharacterClaimedEvent(Character character) {
+    public CharacterUpdatedEvent(Character character) {
         this.character = character;
     }
 

@@ -26,7 +26,7 @@ public class CollectionSet {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "collectionSet", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "collectionSet", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Character> characters = new ArrayList<>();
 
     @Column(nullable = false)
@@ -37,11 +37,13 @@ public class CollectionSet {
 
     public CollectionSet() {
         this.totalValue = 0;
+        this.collectionSize = 0;
     }
 
     public CollectionSet(User user) {
         this.user = user;
         this.totalValue = 0;
+        this.collectionSize = 0;
     }
 
     public Long getId() {
@@ -107,9 +109,10 @@ public class CollectionSet {
             recalculateCollectionSize();
         }
     }
-    
+
     public void removeCharacter(Character character) {
-        if (characters != null) {
+        if (characters != null && characters.contains(character)) {
+            System.out.println("Removing character: " + character.getName());
             characters.remove(character);
             character.setCollectionSet(null);
             recalculateTotalValue();

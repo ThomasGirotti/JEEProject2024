@@ -42,7 +42,7 @@ public class RollController {
             model.addAttribute("error", "Vous devez attendre pour faire un roll.");
             return "roll";
         }
-        List<Character> rolledCharacters = rollService.rollCharacters();
+        List<Character> rolledCharacters = rollService.rollCharacters(user);
         userService.updateRollTime(user); // Met à jour l'heure de roll
         model.addAttribute("characters", rolledCharacters);
         return "roll";
@@ -57,7 +57,7 @@ public class RollController {
         }
         Character character = characterService.getCharacterById(characterId);
         rollService.claimCharacter(user, character);
-        userService.updateClaimTime(user); // Met à jour l'heure de claim
+        userService.updateClaimTime(user);
         model.addAttribute("success", "Vous avez claim le personnage : " + character.getName());
         return "redirect:/collection";
     }

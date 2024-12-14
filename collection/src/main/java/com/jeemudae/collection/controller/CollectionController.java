@@ -7,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jeemudae.collection.repository.User;
@@ -42,5 +43,15 @@ public class CollectionController {
         model.addAttribute("user", user);
         model.addAttribute("characters", characterService.getCharactersForUser(user));
         return "collection";
+    }
+
+    @PostMapping("/collection/sell")
+    public String sellCharacter(@RequestParam("characterId") Long characterId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        characterService.sellCharacter(user, characterId);
+        return "redirect:/collection";
     }
 }

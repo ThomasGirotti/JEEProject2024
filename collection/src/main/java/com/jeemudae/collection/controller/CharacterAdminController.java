@@ -46,7 +46,7 @@ public class CharacterAdminController {
         character.setName(name);
         character.setPrice(price);
         character.setImagePath(filename);
-        characterService.saveCharacter(character);
+        characterService.updateCharacter(character);
         return "redirect:/admin/characters";
     }
 

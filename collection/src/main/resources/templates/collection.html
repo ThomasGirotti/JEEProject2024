@@ -14,6 +14,11 @@
             <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
             <br>
             Prix : <span th:text="${character.price}"></span>
+            <br>
+            <form th:action="@{/collection/sell}" method="post">
+                <input type="hidden" name="characterId" th:value="${character.id}">
+                <button type="submit">Vendre</button>
+            </form>
         </li>
     </ul>
     <a href="/">Retour à l'accueil</a>
