@@ -2,14 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Utilisateurs suivis</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Utilisateurs que vous suivez</h1>
-    <ul>
-        <li th:each="user : ${following}">
-            <a th:href="@{/user/profile(username=${user.username})}" th:text="${user.username}"></a>
-        </li>
-    </ul>
-    <a href="/collection">Retour à la collection</a>
+<body class="bg-gray-900 text-gray-200">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-100">Utilisateurs que vous suivez</h1>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
+            <ul class="space-y-4">
+                <li th:each="user : ${following}">
+                    <a th:href="@{/user/profile(username=${user.username})}" th:text="${user.username}" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200"></a>
+                </li>
+            </ul>
+            <div class="mt-6 space-y-2">
+                <a href="/collection" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à la collection</a>
+                <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
