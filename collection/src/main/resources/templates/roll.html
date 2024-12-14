@@ -6,6 +6,7 @@
     <title>Roll</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-900 text-gray-200">
     <div class="min-h-screen flex flex-col items-center justify-center">
         <div class="mb-6 text-center">
@@ -17,8 +18,8 @@
             </div>
             <div th:if="${characters != null}">
                 <h2 class="text-xl font-semibold mb-4">Résultats du Roll : </h2>
-                <div class="character-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <div th:each="character : ${characters}" class="character bg-gray-700 p-4 rounded-lg shadow-md text-center">
+                <div class="character-list grid grid-cols-5 gap-6">
+                    <div th:each="character : ${characters}" class="character bg-gray-700 p-4 rounded-lg shadow-md text-center opacity-0 transition-opacity duration-1000">
                         <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="w-full h-auto mb-4 rounded">
                         <h3 th:text="${character.name}" class="text-lg font-bold mb-2"></h3>
                         <p>Prix : <span th:text="${character.price}"></span></p>
@@ -37,17 +38,22 @@
                     <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold transition duration-300 ease-in-out">Faire un Roll</button>
                 </form>
             </div>
-            <div class="mt-6">
+            <div class="mt-6"></div>
                 <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
             </div>
         </div>
     </div>
 </body>
 </html>
-        </div>
-    </div>
-    <div th:if="${characters == null}">
-        <p>Appuyez sur le bouton pour découvrir des personnages !</p>
-    </div>
-</body>
-</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const characters = document.querySelectorAll('.character');
+        characters.forEach((character, index) => {
+            setTimeout(() => {
+                character.classList.remove('opacity-0');
+                character.classList.add('opacity-100');
+            }, index * 1000);
+        });
+    });
+</script>
