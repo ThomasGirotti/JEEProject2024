@@ -17,7 +17,7 @@ public class CharacterUpdatedEventListener {
     
     @Async
     @EventListener
-    public void handleCharacterClaimed(CharacterUpdatedEvent event) {
+    public void handleCharacterUpdated(CharacterUpdatedEvent event) {
         System.out.println("Received Async event");
         Character claimedCharacter = event.getCharacter();
         System.out.println("Character causing the recalculation: " + claimedCharacter.getName());
