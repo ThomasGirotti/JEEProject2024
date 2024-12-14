@@ -109,14 +109,4 @@ public class CollectionSet {
             recalculateCollectionSize();
         }
     }
-
-    public void removeCharacter(Character character) {
-        if (characters != null && characters.contains(character)) {
-            System.out.println("Removing character: " + character.getName());
-            characters.remove(character);
-            character.setCollectionSet(null);
-            recalculateTotalValue();
-            recalculateCollectionSize();
-        }
-    }
 }

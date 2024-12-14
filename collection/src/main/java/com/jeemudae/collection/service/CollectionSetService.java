@@ -31,10 +31,11 @@ public class CollectionSetService {
         List<Character> characters = collectionSet.getCharacters();
         if (characters != null) {
             int sum = characters.stream().mapToInt(character -> {System.out.println("Character price: " + character.getPrice());return character.getPrice();}).sum();
+            int size = characters.size();
             collectionSet.setTotalValue(sum);
             System.out.println("Total value of collection set: " + sum);
-            System.out.println("Collection size: " + characters.size());
-            collectionSet.setCollectionSize(characters.size());
+            collectionSet.setCollectionSize(size);
+            System.out.println("Collection size: " + size);
             collectionSetRepository.save(collectionSet);
         }
     }

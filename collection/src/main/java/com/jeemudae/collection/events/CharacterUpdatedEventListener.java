@@ -5,7 +5,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
-import com.jeemudae.collection.repository.Character;
 import com.jeemudae.collection.repository.CollectionSet;
 import com.jeemudae.collection.service.CollectionSetService;
 
@@ -19,9 +18,9 @@ public class CharacterUpdatedEventListener {
     @EventListener
     public void handleCharacterUpdated(CharacterUpdatedEvent event) {
         System.out.println("Received Async event");
-        Character claimedCharacter = event.getCharacter();
-        System.out.println("Character causing the recalculation: " + claimedCharacter.getName());
-        CollectionSet collectionSet = claimedCharacter.getCollectionSet();
+        System.out.println("Recalculated collection set, START");
+        CollectionSet collectionSet = event.getCollectionSet();
+        System.out.println("Collection to recalculate : " + collectionSet);
         if (collectionSet != null) {
             collectionSetService.recalculateCollectionSet(collectionSet);
             System.out.println("Recalculated collection set, END");

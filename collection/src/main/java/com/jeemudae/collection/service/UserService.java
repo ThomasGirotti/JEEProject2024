@@ -63,12 +63,24 @@ public class UserService {
         return user.getLastClaimTime().isBefore(now.minusHours(2));
     }
 
+    public boolean canBoost(User user) {
+        LocalDateTime now = LocalDateTime.now();
+        if (user.getLastBoostTime() == null) {
+            return true;
+        }
+        return user.getLastBoostTime().isBefore(now.minusHours(1));
+    }
+
     public void updateRollTime(User user) {
         user.setLastRollTime(LocalDateTime.now());
     }
 
     public void updateClaimTime(User user) {
         user.setLastClaimTime(LocalDateTime.now());
+    }
+
+    public void updateBoostTime(User user) {
+        user.setLastBoostTime(LocalDateTime.now());
     }
 
     public UserService(UserRepository userRepository) {

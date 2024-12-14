@@ -52,6 +52,7 @@ public class CollectionController {
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
         characterService.sellCharacter(user, characterId);
+        characterService.updateCall(user.getCollectionSet().getId());
         return "redirect:/collection";
     }
 }

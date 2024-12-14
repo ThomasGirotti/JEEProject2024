@@ -1,15 +1,15 @@
 package com.jeemudae.collection.events;
 
-import com.jeemudae.collection.repository.Character;
+import com.jeemudae.collection.repository.CollectionSet;
 
 public class CharacterUpdatedEvent {
-    private final Character character;
+    private final CollectionSet collectionSet;
 
-    public CharacterUpdatedEvent(Character character) {
-        this.character = character;
+    public CharacterUpdatedEvent(CollectionSet collectionSet) {
+        this.collectionSet = collectionSet;
     }
 
-    public Character getCharacter() {
-        return character;
+    public CollectionSet getCollectionSet() {
+        return collectionSet;
     }
 }
