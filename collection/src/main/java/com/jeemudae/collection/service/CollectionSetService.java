@@ -2,6 +2,7 @@ package com.jeemudae.collection.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeemudae.collection.repository.Character;
@@ -12,11 +13,9 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class CollectionSetService {
-    private final CollectionSetRepository collectionSetRepository;
-    
-    public CollectionSetService(CollectionSetRepository collectionSetRepository) {
-        this.collectionSetRepository = collectionSetRepository;
-    }
+
+    @Autowired
+    private CollectionSetRepository collectionSetRepository;
     
     @Transactional
     public void recalculateAllCollectionSets() {

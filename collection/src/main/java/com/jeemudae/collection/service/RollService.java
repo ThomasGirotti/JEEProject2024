@@ -3,6 +3,7 @@ package com.jeemudae.collection.service;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jeemudae.collection.repository.Character;
@@ -15,19 +16,17 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class RollService {
-    private final CharacterService characterService;
-    private final CollectionSetService collectionSetService;
-    private final CollectionSetRepository collectionSetRepository;
-    private final UserService userService;
-    private final UserRepository userRepository;
+    @Autowired
+    private CharacterService characterService;
 
-    public RollService(CharacterService characterService, CollectionSetRepository collectionSetRepository, CollectionSetService collectionSetService, UserService userService, UserRepository userRepository) {
-        this.characterService = characterService;
-        this.collectionSetRepository = collectionSetRepository;
-        this.collectionSetService = collectionSetService;
-        this.userService = userService;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private CollectionSetRepository collectionSetRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public List<Character> rollCharacters(User user) {

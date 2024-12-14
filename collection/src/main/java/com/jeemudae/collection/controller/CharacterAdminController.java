@@ -1,5 +1,6 @@
 package com.jeemudae.collection.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,11 @@ import com.jeemudae.collection.service.FileStorageService;
 @Controller
 @RequestMapping("/admin/characters")
 public class CharacterAdminController {
-    private final CharacterService characterService;
-    private final FileStorageService fileStorageService;
-
-    public CharacterAdminController(CharacterService characterService, FileStorageService fileStorageService) {
-        this.characterService = characterService;
-        this.fileStorageService = fileStorageService;
-    }
+    @Autowired
+    private CharacterService characterService;
+    
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @GetMapping
     public String viewCharacters(Model model) {

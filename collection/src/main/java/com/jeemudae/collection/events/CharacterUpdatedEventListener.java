@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.jeemudae.collection.repository.Character;
 import com.jeemudae.collection.repository.CollectionSet;
-import com.jeemudae.collection.repository.CollectionSetRepository;
 import com.jeemudae.collection.service.CollectionSetService;
 
 @Component
@@ -15,9 +14,6 @@ public class CharacterUpdatedEventListener {
     
     @Autowired
     CollectionSetService collectionSetService;
-
-    public CharacterUpdatedEventListener(CollectionSetRepository collectionSetRepository) {
-    }
     
     @Async
     @EventListener

@@ -2,6 +2,7 @@ package com.jeemudae.collection.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +18,18 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class CharacterService {
-    private final CollectionSetRepository collectionSetRepository;
-    private final CharacterRepository characterRepository;
-    private final ApplicationEventPublisher eventPublisher;
-    private final UserRepository userRepository;
 
-    public CharacterService(CharacterRepository characterRepository, ApplicationEventPublisher eventPublisher, CollectionSetRepository collectionSetRepository, UserRepository userRepository) {
-        this.collectionSetRepository = collectionSetRepository;
-        this.characterRepository = characterRepository;
-        this.eventPublisher = eventPublisher;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private CollectionSetRepository collectionSetRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
+
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Character> getAllCharacters() {
         return characterRepository.findAll();
@@ -61,6 +63,8 @@ public class CharacterService {
         collectionSet.removeCharacter(character);
         characterRepository.save(character);
         collectionSetRepository.save(collectionSet);
+        user.updateCash(value);
+        userRepository.save(user);
         updateCharacter(character);
     }
 

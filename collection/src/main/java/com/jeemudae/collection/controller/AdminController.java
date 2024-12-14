@@ -1,5 +1,6 @@
 package com.jeemudae.collection.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +11,9 @@ import com.jeemudae.collection.service.UserService;
 
 @Controller
 public class AdminController {
-    private final UserService userService;
 
-    public AdminController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/admin")
     public String adminHome(Model model, Authentication authentication) {

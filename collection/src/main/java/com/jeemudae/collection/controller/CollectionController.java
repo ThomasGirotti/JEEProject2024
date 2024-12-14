@@ -2,6 +2,7 @@ package com.jeemudae.collection.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,13 +16,12 @@ import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
 @Controller
 public class CollectionController {
-    private final CharacterService characterService;
-    private final UserRepository userRepository;
 
-    public CollectionController(CharacterService characterService, UserRepository userRepository) {
-        this.characterService = characterService;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private CharacterService characterService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/collection")
     public String getCollection(@RequestParam(value = "username", required = false) String username, Model model) {

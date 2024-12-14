@@ -2,6 +2,7 @@ package com.jeemudae.collection.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,15 +20,15 @@ import com.jeemudae.collection.service.UserService;
 @Controller
 @RequestMapping("/roll")
 public class RollController {
-    private final UserService userService;
-    private final RollService rollService;
-    private final CharacterService characterService;
 
-    public RollController(UserService userService, RollService rollService, CharacterService characterService) {
-        this.userService = userService;
-        this.rollService = rollService;
-        this.characterService = characterService;
-    }
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RollService rollService;
+
+    @Autowired
+    private CharacterService characterService;
 
     @GetMapping
     public String showRollPage(Model model) {
