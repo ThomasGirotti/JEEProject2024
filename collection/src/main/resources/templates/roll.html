@@ -57,5 +57,8 @@
     <div th:if="${characters == null}">
         <p>Appuyez sur le bouton pour découvrir des personnages !</p>
     </div>
+    <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}">Retour au profil</a>
+    <a th:href="${user.username == #authentication.name} ? '/collection' : '/collection?username=' + ${user.username}">Voir la collection</a>
+    <a href="/">Retour à l'accueil</a>
 </body>
 </html>

@@ -49,9 +49,9 @@ public class CharacterService {
     }
 
     @Transactional
-    public void updateCharacter(Character character) {
-        characterRepository.save(character);
-        eventPublisher.publishEvent(new CharacterUpdatedEvent(character));
+    public void updateCall(long collectionId) {
+        CollectionSet collectionSet = collectionSetRepository.findById(collectionId).orElseThrow();
+        eventPublisher.publishEvent(new CharacterUpdatedEvent(collectionSet));
     }
 
     @Transactional
@@ -60,12 +60,12 @@ public class CharacterService {
         Character character = characterRepository.findById(characterId).orElseThrow();
         int value = character.getPrice();
         System.out.println("Selling character for " + value);
-        collectionSet.removeCharacter(character);
-        characterRepository.save(character);
+        collectionSet.getCharacters().remove(character);
         collectionSetRepository.save(collectionSet);
+        character.setCollectionSet(null);
+        characterRepository.save(character);
         user.updateCash(value);
         userRepository.save(user);
-        updateCharacter(character);
     }
 
     @Transactional
@@ -73,8 +73,10 @@ public class CharacterService {
         CollectionSet collectionSet = collectionSetRepository.findByCharactersId(characterId);
         Character character = characterRepository.findById(characterId).orElseThrow();
         if (collectionSet != null) {
-            collectionSet.removeCharacter(character);
+            collectionSet.getCharacters().remove(character);
             collectionSetRepository.save(collectionSet);
+            character.setCollectionSet(null);
+            characterRepository.save(character);
         }
         characterRepository.delete(character);
     }

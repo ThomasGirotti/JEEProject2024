@@ -5,12 +5,11 @@
 - ✅ Ajouter characters (admin)
 - ✅ Remove characters (admin)
 - 🔄 Page de rolls
-- ❌ Page de rolls commune
 - ✅ Monnaie (cash)
 - ❌ Trier collection
 - ✅ Vente de characters
-- 🔄 Trade entre joueurs
-- ❌ Hotel des ventes
+- ❌ Trade entre joueurs
+- 🔄 Hotel des ventes
 - ✅ Top characters (valeur) + tri potentiel
 - ✅ Top joueurs (valeur) + tri potentiel
 

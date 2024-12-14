@@ -40,13 +40,7 @@ public class RollController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         User user = userRepository.findByUsername(currentUsername).get();
-        List<Character> characters = user.getRolledCharacters();
-        if (characters.isEmpty()) {
-            model.addAttribute("error", "Vous n'avez jamais effectué de rolls.");
-        } else {
-            model.addAttribute("characters", characters);
-            model.addAttribute("user", user);
-        }
+        model.addAttribute("user", user);
         return "roll";
     }
     
@@ -55,13 +49,11 @@ public class RollController {
         User user = userService.getUserByUsername(authentication.getName());
         if (userService.canRoll(user)) {
             List<Character> rolledCharacters = rollService.rollCharacters();
-            user.setRolledCharacters(rolledCharacters);
             userService.updateRollTime(user);
             userRepository.save(user);
             System.out.println("Roll effectué et enregistré pour " + user.getUsername());
             model.addAttribute("characters", rolledCharacters);
         } else {
-            model.addAttribute("characters", user.getRolledCharacters());
             model.addAttribute("error", "Vous devez attendre pour faire un roll.");
         }
         model.addAttribute("user", user);
@@ -79,7 +71,6 @@ public class RollController {
                 return "redirect:/collection";
             } else {
                 model.addAttribute("error", "Vous n'avez plus de claim disponible.");
-                return "roll";
             }
         } else {
             if (character.getCollectionSet().getUser().getId().equals(user.getId())) {
@@ -89,12 +80,12 @@ public class RollController {
                     return "redirect:/collection";
                 } else {
                     model.addAttribute("error", "Vous n'avez plus de boost disponible.");
-                    return "roll";
                 }
             } else {
                 model.addAttribute("error", "Ce personnage a déjà été claim par un autre utilisateur.");
-                return "roll";
             }
         }
+        model.addAttribute("user", user);
+        return "roll";
     }
 }
