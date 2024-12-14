@@ -30,9 +30,11 @@
             <label>Sélectionnez les personnages à proposer :</label>
             <div class="checkbox-container">
                 <!-- Boucle à travers les personnages -->
-                <th:block th:each="character : ${userCharacters}">
-                    <label>
-                        <input type="checkbox" name="selectedCharacters" 
+                <th:block th:each="character, iterStat : ${userCharacters}">
+                    <label th:for="'checkbox-' + ${iterStat.index}">
+                        <input type="checkbox" 
+                               id="checkbox-[[${iterStat.index}]]" 
+                               name="selectedCharacters" 
                                th:value="${character.id}" />
                         <span th:text="${character.name}"></span>
                     </label>

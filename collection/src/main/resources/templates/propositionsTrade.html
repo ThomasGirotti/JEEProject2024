@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Propositions de Trade</title>
+</head>
+<body>
+    <h1>Propositions de Trade</h1>
+    <div th:unless="${#lists.isEmpty(propositions)}">
+        <table>
+            <thead>
+                <tr>
+                    <th>Trade ID</th>
+                    <th>Personnage Offert</th>
+                    <th>Personnages Proposés</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="proposition : ${propositions}">
+                    <td th:text="${proposition.id}"></td>
+                    <td th:text="${proposition.tradeCharacter.name}"></td>
+                    <td>
+                        <ul>
+                            <li th:each="character : ${proposition.offeredCharacters}" th:text="${character.name}"></li>
+                        </ul>
+                    </td>
+                    <td>
+                        <form th:action="@{/trade/accepter}" method="post">
+                            <input type="hidden" name="tradeId" th:value="${proposition.id}" />
+                            <button type="submit">Accepter</button>
+                        </form>
+                        <form th:action="@{/trade/refuser}" method="post">
+                            <input type="hidden" name="tradeId" th:value="${proposition.id}" />
+                            <button type="submit">Refuser</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(propositions)}">
+        <p>Aucune proposition de trade pour vos personnages.</p>
+    </div>
+    
+</body>
+</html>

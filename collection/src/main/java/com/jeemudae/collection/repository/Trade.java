@@ -6,6 +6,7 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,6 +14,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "trades")
@@ -26,19 +28,12 @@ public class Trade {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "trade", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Character> charactersToTrade = new ArrayList<>();
-
-
-        // Ajoutez ceci dans la classe Trade
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "trade_character_id", nullable = true)
-    private Character tradeCharacter; // Personnage principal du trade
+    private Character tradeCharacter;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "trade_id")
-    private List<Character> offeredCharacters = new ArrayList<>(); // Liste des personnages proposés
-
+    @OneToMany(mappedBy = "trade", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Character> offeredCharacters = new ArrayList<>();
 
     @Column(nullable = false)
     private boolean isActive = true;
@@ -61,20 +56,40 @@ public class Trade {
         this.user = user;
     }
 
-    public List<Character> getCharactersToTrade() {
-        return charactersToTrade;
+    public Character getTradeCharacter() {
+        return tradeCharacter;
     }
 
-    public void setCharactersToTrade(List<Character> charactersToTrade) {
-        this.charactersToTrade = charactersToTrade;
+    public void setTradeCharacter(Character tradeCharacter) {
+        this.tradeCharacter = tradeCharacter;
+    }
+
+    public List<Character> getOfferedCharacters() {
+        return offeredCharacters;
+    }
+
+    public void setOfferedCharacters(List<Character> offeredCharacters) {
+        this.offeredCharacters.clear();
+        this.offeredCharacters.addAll(offeredCharacters);
     }
 
     public boolean isActive() {
         return isActive;
     }
 
-    public void setActive(boolean isActive) {
-        this.isActive = isActive;
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    @OneToMany(mappedBy = "trade", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Character> charactersToTrade = new ArrayList<>();
+
+    public List<Character> getCharactersToTrade() {
+        return charactersToTrade;
+    }
+
+    public void setCharactersToTrade(List<Character> charactersToTrade) {
+        this.charactersToTrade = charactersToTrade;
     }
 
     public void addCharacter(Character character) {
@@ -85,25 +100,5 @@ public class Trade {
         this.charactersToTrade.remove(character);
     }
 
-        // Définit le personnage principal du trade
-    public void setTradeCharacter(Character tradeCharacter) {
-        this.tradeCharacter = tradeCharacter;
-    }
-
-    // Retourne le personnage principal du trade
-    public Character getTradeCharacter() {
-        return tradeCharacter;
-    }
-
-    // Définit les personnages proposés en échange
-    public void setOfferedCharacters(List<Character> offeredCharacters) {
-        this.offeredCharacters.clear(); // On vide la liste actuelle
-        this.offeredCharacters.addAll(offeredCharacters); // On ajoute les nouveaux personnages
-    }
-
-    // Retourne les personnages proposés en échange
-    public List<Character> getOfferedCharacters() {
-        return offeredCharacters;
-    }
 
 }

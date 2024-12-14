@@ -2,6 +2,7 @@ package com.jeemudae.collection.repository;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +33,6 @@ public class Character {
     @Column(name = "in_trade", nullable = false, columnDefinition = "boolean default false")
     private boolean inTrade;
 
-
     public boolean isInTrade() {
         return inTrade;
     }
@@ -44,7 +44,7 @@ public class Character {
     public Character() {
     }
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "trade_id", nullable = true) // Ajoutez cette colonne
     private Trade trade;
 

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TradeRepository extends JpaRepository<Trade, Long> {
     List<Trade> findByUser(User user);
+    List<Trade> findAllByUser(User user);
 }
