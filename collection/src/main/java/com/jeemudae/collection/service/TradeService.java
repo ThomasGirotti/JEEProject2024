@@ -1,5 +1,7 @@
 package com.jeemudae.collection.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,19 +48,6 @@ public class TradeService {
         tradeRepository.save(trade);
     }
 
-    // Retirer un personnage d'un trade existant
-    public void removeCharacterFromTrade(Long tradeId, Long characterId) {
-        Trade trade = tradeRepository.findById(tradeId)
-                .orElseThrow(() -> new RuntimeException("Trade non trouvé"));
-        
-        Character character = userRepository.getOne(characterId).getCollectionSet().getCharacters().stream()
-                .filter(c -> c.getId().equals(characterId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Personnage non trouvé"));
-        
-        trade.removeCharacter(character);
-        tradeRepository.save(trade);
-    }
 
     public void setCharacterInTrade(Long characterId, boolean inTrade) {
         // Utilise CharacterRepository pour trouver le personnage
@@ -81,4 +70,15 @@ public class TradeService {
         trade.setActive(false);
         tradeRepository.save(trade);
     }
+
+    public void createTradeOffer(Character tradeCharacter, List<Character> offeredCharacters, User currentUser) {
+        // Créer l'objet Trade
+        Trade trade = new Trade(currentUser);  // Associer l'utilisateur connecté
+        trade.setTradeCharacter(tradeCharacter);  // Personnage principal à échanger
+        trade.setOfferedCharacters(offeredCharacters);  // Personnages à proposer
+    
+        // Sauvegarder l'offre de trade
+        tradeRepository.save(trade);
+    }
+    
 }

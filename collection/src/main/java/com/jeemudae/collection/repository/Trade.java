@@ -30,6 +30,16 @@ public class Trade {
     private List<Character> charactersToTrade = new ArrayList<>();
 
 
+        // Ajoutez ceci dans la classe Trade
+    @ManyToOne
+    @JoinColumn(name = "trade_character_id", nullable = true)
+    private Character tradeCharacter; // Personnage principal du trade
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "trade_id")
+    private List<Character> offeredCharacters = new ArrayList<>(); // Liste des personnages proposés
+
+
     @Column(nullable = false)
     private boolean isActive = true;
 
@@ -74,4 +84,26 @@ public class Trade {
     public void removeCharacter(Character character) {
         this.charactersToTrade.remove(character);
     }
+
+        // Définit le personnage principal du trade
+    public void setTradeCharacter(Character tradeCharacter) {
+        this.tradeCharacter = tradeCharacter;
+    }
+
+    // Retourne le personnage principal du trade
+    public Character getTradeCharacter() {
+        return tradeCharacter;
+    }
+
+    // Définit les personnages proposés en échange
+    public void setOfferedCharacters(List<Character> offeredCharacters) {
+        this.offeredCharacters.clear(); // On vide la liste actuelle
+        this.offeredCharacters.addAll(offeredCharacters); // On ajoute les nouveaux personnages
+    }
+
+    // Retourne les personnages proposés en échange
+    public List<Character> getOfferedCharacters() {
+        return offeredCharacters;
+    }
+
 }

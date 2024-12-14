@@ -46,6 +46,10 @@ public class CharacterService {
         return characterRepository.findByInTrade(true); 
     }
     
+    public List<Character> getCharactersByIds(List<Long> characterIds) {
+        return characterRepository.findAllById(characterIds);
+    }
+    
 
     @Transactional
     public void saveCharacter(Character character) {

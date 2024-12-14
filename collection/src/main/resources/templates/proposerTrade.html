@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Proposer un Trade</title>
+</head>
+<body>
+    <h1>Proposer un Trade</h1>
+    
+    <h2>Personnage proposé en trade :</h2>
+    <div>
+        <p>Nom : <span th:text="${tradeCharacter.name}">Nom du personnage</span></p>
+        <p>Prix : <span th:text="${tradeCharacter.price}">Prix</span></p>
+        <img th:src="@{'/uploads/' + ${tradeCharacter.imagePath}}" alt="Image du personnage"
+             style="max-width: 150px; max-height: 150px;">
+    </div>
+
+    <h2>Vos personnages disponibles :</h2>
+    <style>
+        .checkbox-container {
+            max-height: 200px; /* Limite la hauteur de la liste */
+            overflow-y: auto;  /* Permet de défiler verticalement */
+        }
+    </style>
+    
+    <form th:action="@{/submitTradeOffer}" method="post">
+        <input type="hidden" name="tradeCharacterId" th:value="${tradeCharacter.id}" />
+        
+        <div>
+            <label>Sélectionnez les personnages à proposer :</label>
+            <div class="checkbox-container">
+                <!-- Boucle à travers les personnages -->
+                <th:block th:each="character : ${userCharacters}">
+                    <label>
+                        <input type="checkbox" name="selectedCharacters" 
+                               th:value="${character.id}" />
+                        <span th:text="${character.name}"></span>
+                    </label>
+                </th:block>
+            </div>
+        </div>
+        <button type="submit">Soumettre l'offre</button>
+    </form>
+    
+    
+</body>
+</html>
