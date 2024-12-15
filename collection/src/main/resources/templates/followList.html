@@ -20,9 +20,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:if="${following != null}" th:each="user : ${following}" class="hover:bg-gray-700 transition-colors transition duration-500">
+                <tr th:if="${following != null}" th:each="user : ${following}" class="transition-colors transition duration-500">
                     <td class="py-2 px-4 border-b border-gray-600">
-                        <a th:href="@{/profile(username=${user.username})}" th:text="${user.username}" class="text-gray-400 hover:text-gray-300">Username</a>
+                        <a th:href="@{/profile(username=${user.username})}" th:text="${user.username}" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-white-400 hover:text-gray-300">Username</a>
                     </td>
                     <td th:text="${user.collectionSet.totalValue}" class="py-2 px-4 border-b border-gray-600"></td>
                     <td th:text="${user.collectionSet.characters.size()}" class="py-2 px-4 border-b border-gray-600"></td>
