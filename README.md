@@ -47,7 +47,7 @@ Un système d'échange est également intégré entre joueurs.
 
 #### Option 2:
 2. Ouvrez le projet dans votre IDE (comme VSCode)
-3. Naviguez jusqu'à `src/main/java/com/JEEProject2024/collection/src/main/java/com/jeemudae/collection`
+3. Naviguez jusqu'à `JEEProject2024\collection\src\main\java\com\jeemudae\collection`
 4. Exécutez `CollectionManagerApplication.java`
 5. Ouvrez votre navigateur et rendez-vous sur :
    ```bash
