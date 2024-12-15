@@ -19,22 +19,20 @@
             overflow-y: auto;
         }
     </style>
-    
     <form th:action="@{/submitTradeOffer}" method="post">
         <input type="hidden" name="tradeCharacterId" th:value="${tradeCharacter.id}" />
-        
         <div>
             <label>Sélectionnez les personnages à proposer :</label>
             <div class="checkbox-container">
-                <th:block th:each="character, iterStat : ${userCharacters}">
-                <label th:for="'checkbox-' + ${iterStat.index}">
-                    <input type="checkbox" id="checkbox-[[${iterStat.index}]]" name="selectedCharacters" th:value="${character.id}" />
-                    <span th:text="${character.name}"></span>
-                </label>
-            </th:block>
+                <th:block th:each="character : ${userCharacters}">
+                    <label>
+                        <input type="checkbox" name="selectedCharacters" th:value="${character.id}" />
+                        <span th:text="${character.name}"></span>
+                    </label>
+                </th:block>
+            </div>
         </div>
-    </div>
-    <button type="submit">Soumettre l'offre</button>
-</form>
+        <button type="submit">Soumettre l'offre</button>
+    </form>
 </body>
 </html>

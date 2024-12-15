@@ -51,7 +51,7 @@ public class TradeController {
     @PostMapping("/createTrade")
     public String proposeTrade(@RequestParam("characterId") Long characterId) {
         tradeService.setCharacterInTrade(characterId, true);
-        return "redirect:/createTrade"; 
+        return "redirect:/createTrade";
     }
     
     @PostMapping("/proposerTrade")
@@ -69,8 +69,7 @@ public class TradeController {
     @PostMapping("/submitTradeOffer")
     public String submitTradeOffer(
     @RequestParam("tradeCharacterId") Long tradeCharacterId,
-    @RequestParam(value = "selectedCharacters", required = false) List<Long> selectedCharacterIds,
-    Model model) {
+    @RequestParam(value = "selectedCharacters", required = false) List<Long> selectedCharacterIds, Model model) {
         if (selectedCharacterIds == null || selectedCharacterIds.isEmpty()) {
             model.addAttribute("message", "Veuillez sélectionner au moins un personnage à proposer.");
             return "createTrade";
@@ -97,7 +96,8 @@ public class TradeController {
             System.out.println("Trade ID: " + trade.getId());
             System.out.println("Trade Character: " + trade.getTradeCharacter().getName());
             System.out.println("Offered Characters: ");
-            for (Character character : trade.getOfferedCharacters()) {
+            List<Character> offeredCharacters = trade.getOfferedCharacters();
+            for (Character character : offeredCharacters) {
                 System.out.println(" - " + character.getName());
             }
         }

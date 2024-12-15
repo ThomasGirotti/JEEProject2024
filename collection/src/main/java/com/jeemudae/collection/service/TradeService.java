@@ -32,34 +32,21 @@ public class TradeService {
         return tradeRepository.save(trade);
     }
     
-    public void addCharacterToTrade(Long tradeId, Long characterId) {
-        Trade trade = tradeRepository.findById(tradeId).orElseThrow(() -> new RuntimeException("Trade non trouvé"));
-        Character character = userRepository.getOne(characterId).getCollectionSet().getCharacters().stream().filter(c -> c.getId().equals(characterId)).findFirst().orElseThrow(() -> new RuntimeException("Personnage non trouvé"));
-        trade.addCharacter(character);
-        tradeRepository.save(trade);
-    }
-    
     public void setCharacterInTrade(Long characterId, boolean inTrade) {
         Character character = characterRepository.findById(characterId).orElseThrow(() -> new RuntimeException("Personnage non trouvé : " + characterId));
         character.setInTrade(inTrade);
         characterRepository.save(character);
     }
-    public void deactivateTrade(Long tradeId) {
-        Trade trade = tradeRepository.findById(tradeId).orElseThrow(() -> new RuntimeException("Trade non trouvé"));
-        trade.setActive(false);
-        tradeRepository.save(trade);
-    }
     
     @Transactional
     public void createTradeOffer(Character tradeCharacter, List<Character> offeredCharacters, User user) {
-        Character tradeCharacterAttached = characterRepository.findById(tradeCharacter.getId()).orElseThrow(() -> new RuntimeException("Personnage principal introuvable"));
         List<Character> offeredCharactersAttached = new ArrayList<>();
         for (Character character : offeredCharacters) {
             Character offeredCharacterAttached = characterRepository.findById(character.getId()).orElseThrow(() -> new RuntimeException("Personnage offert introuvable"));
             offeredCharactersAttached.add(offeredCharacterAttached);
         }
         Trade trade = new Trade(user);
-        trade.setTradeCharacter(tradeCharacterAttached);
+        trade.setTradeCharacter(tradeCharacter);
         trade.setOfferedCharacters(offeredCharactersAttached);
         tradeRepository.save(trade);
     }
