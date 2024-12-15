@@ -25,11 +25,11 @@
                         </ul>
                     </td>
                     <td>
-                        <form th:action="@{/trade/accepter}" method="post">
+                        <form th:action="@{/accepterTrade}" method="post">
                             <input type="hidden" name="tradeId" th:value="${proposition.id}" />
                             <button type="submit">Accepter</button>
                         </form>
-                        <form th:action="@{/trade/refuser}" method="post">
+                        <form th:action="@{/refuserTrade}" method="post">
                             <input type="hidden" name="tradeId" th:value="${proposition.id}" />
                             <button type="submit">Refuser</button>
                         </form>

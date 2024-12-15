@@ -41,12 +41,16 @@ public class TradeService {
     @Transactional
     public void createTradeOffer(Character tradeCharacter, List<Character> offeredCharacters, User user) {
         List<Character> offeredCharactersAttached = new ArrayList<>();
+        Trade trade = new Trade(tradeCharacter.getCollectionSet().getUser());
+        trade.setTradeCharacter(tradeCharacter);
+
         for (Character character : offeredCharacters) {
-            Character offeredCharacterAttached = characterRepository.findById(character.getId()).orElseThrow(() -> new RuntimeException("Personnage offert introuvable"));
+            Character offeredCharacterAttached = characterRepository.findById(character.getId())
+                .orElseThrow(() -> new RuntimeException("Personnage offert introuvable"));
+            offeredCharacterAttached.setTrade(trade);
             offeredCharactersAttached.add(offeredCharacterAttached);
         }
-        Trade trade = new Trade(user);
-        trade.setTradeCharacter(tradeCharacter);
+
         trade.setOfferedCharacters(offeredCharactersAttached);
         tradeRepository.save(trade);
     }
