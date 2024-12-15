@@ -37,13 +37,13 @@ public class TradeController {
     
     @GetMapping("/createTrade")
     public String getCreateTradePage(@RequestParam(value = "characterId", required = false) Long characterId, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
         List<Character> charactersInTrade = characterService.getCharactersInTrade();
         model.addAttribute("charactersInTrade", charactersInTrade);
-        List<Character> characters = characterService.getAllCharacters();
-        List<Character> availableCharacters = characters.stream().filter(character -> !character.isInTrade()) .collect(Collectors.toList());
-        if (characterId != null) {
-            model.addAttribute("selectedCharacterId", characterId);
-        }
+        List<Character> userCharacters = currentUser.getCollectionSet().getCharacters();
+        List<Character> availableCharacters = userCharacters.stream().filter(character -> !character.isInTrade()).collect(Collectors.toList());
         model.addAttribute("characters", availableCharacters); 
         return "createTrade"; 
     }
@@ -51,7 +51,7 @@ public class TradeController {
     @PostMapping("/createTrade")
     public String proposeTrade(@RequestParam("characterId") Long characterId) {
         tradeService.setCharacterInTrade(characterId, true);
-        return "createTrade"; 
+        return "redirect:/createTrade"; 
     }
     
     @PostMapping("/proposerTrade")
