@@ -13,10 +13,16 @@
             <div th:if="${error}" class="text-red-500 mb-4">
                 <p th:text="${error}"></p>
             </div>
-            <h2 class="text-xl font-semibold mb-4">Informations : </h2>
-            <p class="mb-2" th:text="${user.cash != null ? 'Cash : ' + user.cash : 'Cash is null'}"></p>
-            <p class="mb-2" th:text="${collectionSet.totalValue != null ? 'Valeur de la collection : ' + collectionSet.totalValue : 'Collection value is null'}"></p>
-            <p class="mb-6" th:text="${collectionSet.collectionSize != null ? 'Nombre de cartes dans la collection : ' + collectionSet.collectionSize : 'Collection size is null'}"></p>
+            <h2 class="text-xl font-semibold mb-4">Informations du joueur : </h2>
+            <p class="mb-2" th:text="${user.cash != null ? 'Cash : ' + user.cash : 'Pas de cash disponible'}"></p>
+            <p class="mb-2" th:text="${collectionSet.totalValue != null ? 'Valeur de la collection : ' + collectionSet.totalValue : 'La collection est vide'}"></p>
+            <p class="mb-6" th:text="${collectionSet.collectionSize != null ? 'Nombre de cartes dans la collection : ' + collectionSet.collectionSize : 'La collection est vide '}"></p>
+            <div th:if="${user.username == #authentication.name}" class="mb-6">
+                <h2 class="text-xl font-semibold mb-4">Actions disponibles : </h2>
+                <p class="mb-2" th:text="${canRoll ? 'Vous pouvez roll des personnages' : 'Vous pourrez roll dans : ' + rollTime}"></p>
+                <p class="mb-2" th:text="${canClaim ? 'Vous pouvez claim un personnage' : 'Vous pourrez claim dans : ' + claimTime}"></p>
+                <p class="mb-6" th:text="${canBoost ? 'Vous pouvez booster un personnage' : 'Vous pourrez booster dans : ' + boostTime}"></p>
+            </div>
             <div th:if="${user.username != #authentication.name}" class="mb-6">
                 <form th:action="@{/follow}" method="post" th:if="${!following}" class="mb-2">
                     <input type="hidden" name="username" th:value="${user.username}">

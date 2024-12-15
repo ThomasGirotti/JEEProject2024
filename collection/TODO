@@ -12,17 +12,17 @@
 - ✅ Top characters (valeur) + tri potentiel
 - ✅ Top joueurs (valeur) + tri potentiel
 
-## Page Connexion 🔄
+## Page Connexion ✅
 
 - ✅ Formulaire de connexion
 - ✅ Lien vers la page de création de compte
 
-## Page Création de compte 🔄
+## Page Création de compte ✅
 
 - ✅ Formulaire de création de compte
 - ✅ Lien vers la page de connexion
 
-## Page Profile 🔄
+## Page Profile ✅
 
 - Informations du joueur
 - ✅ Cash du joueur
@@ -30,32 +30,32 @@
 - ✅ Nombre de characters
 - ✅ Lien vers la page de collection
 - ✅ Bouton de follow
+- ✅ CD des rolls et du boost
 
-## Page Collection 🔄
+## Page Collection ✅
 
 - ✅ Liste des characters du joueur
 - ✅ Bouton de vente
 - ✅ Sélecteur de tri
 - ✅ Tri manuel
 
-## Page Search 🔄
+## Page Search ✅
 
 - ✅ Barre de recherche
 
-## Page Admin Character 🔄
+## Page Admin Character ✅
 
 - ✅ Informations du character
 - ✅ Bouton add character
 - ✅ Bouton de suppression
 
-## Page de Roll 🔄
+## Page de Roll ✅
 
 - ✅ Bouton de roll
 - ✅ Affichage des characters
 - ✅ Gestion des characters deja claim
-- 🔄 CD des rolls et du boost
 
 # TODO list des bugs
 
 - ✅ Vente de characters des autres collections (search profile)
-- 🔄 Index de la liste (position) à refaire quand update collectionSet
+- ✅ Index de la liste (position) à refaire quand update collectionSet
