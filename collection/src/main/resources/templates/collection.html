@@ -24,42 +24,45 @@
                 </form>
                 <div th:each="character, iterStat : ${characters}" class="flex items-center gap-6 p-4 bg-gray-700 transition duration-500 transform hover:scale-105 rounded-lg">
                     <img th:src="@{'/uploads/' + ${character.imagePath}}" 
-                         alt="Image du personnage" 
-                         class="w-20 h-20 object-contain rounded-md">
+                    alt="Image du personnage" 
+                    class="w-20 h-20 object-contain rounded-md">
                     <div class="flex flex-col flex-1">
                         <span th:text="${character.name}" class="text-lg font-semibold text-gray-200"></span>
                         <span class="text-sm text-gray-400">Prix : <span th:text="${character.price}"></span></span>
-                        <form th:action="@{/collection/sell}" method="post" class="mt-2">
-                            <input type="hidden" name="characterId" th:value="${character.id}">
-                            <button type="submit" class="py-1 px-3 bg-red-600 hover:bg-red-500 text-white rounded text-sm">Vendre</button>
-                        </form>
-                    </div>
-                    <div th:if="${sortBy == 'custom'}" class="flex items-center gap-6">
-                        <div class="flex flex-col items-center gap-2 w-24 h-24 bg-gray-700 rounded justify-center">
-                            <form th:action="@{/collection/moveLeft}" method="post" th:if="${!iterStat.first}">
+                        <div th:if="${isVisiting}">
+                            <form th:action="@{/collection/sell}" method="post" class="mt-2">
                                 <input type="hidden" name="characterId" th:value="${character.id}">
-                                <button type="submit" class="w-16 h-10 bg-gray-600 hover:bg-gray-500 text-white rounded flex items-center justify-center">
-                                    Haut
-                                </button>
-                            </form>
-                            <form th:action="@{/collection/moveRight}" method="post" th:if="${!iterStat.last}">
-                                <input type="hidden" name="characterId" th:value="${character.id}">
-                                <button type="submit" class="w-16 h-10 bg-gray-600 hover:bg-gray-500 text-white rounded flex items-center justify-center">
-                                    Bas
-                                </button>
+                                <button type="submit" class="py-1 px-3 bg-red-600 hover:bg-red-500 text-white rounded text-sm">Vendre</button>
                             </form>
                         </div>
-                        <form th:action="@{/collection/updatePosition}" method="post" class="flex items-center gap-2">
-                            <input type="hidden" name="characterId" th:value="${character.id}">
-                            <label for="position" class="text-gray-200">Position :</label>
-                            <input type="number" name="position" th:value="${character.position}" min="0" th:max="${characters.size() - 1}" class="bg-gray-700 text-gray-200 rounded p-1 w-16">
-                        </form>
                     </div>
-                    
+                    <div th:if="${isVisiting}">
+                        <div th:if="${sortBy == 'custom'}" class="flex items-center gap-6">
+                            <div class="flex flex-col items-center gap-2 w-24 h-24 bg-gray-700 rounded justify-center">
+                                <form th:action="@{/collection/moveLeft}" method="post" th:if="${!iterStat.first}">
+                                    <input type="hidden" name="characterId" th:value="${character.id}">
+                                    <button type="submit" class="w-16 h-10 bg-gray-600 hover:bg-gray-500 text-white rounded flex items-center justify-center">
+                                        Haut
+                                    </button>
+                                </form>
+                                <form th:action="@{/collection/moveRight}" method="post" th:if="${!iterStat.last}">
+                                    <input type="hidden" name="characterId" th:value="${character.id}">
+                                    <button type="submit" class="w-16 h-10 bg-gray-600 hover:bg-gray-500 text-white rounded flex items-center justify-center">
+                                        Bas
+                                    </button>
+                                </form>
+                            </div>
+                            <form th:action="@{/collection/updatePosition}" method="post" class="flex items-center gap-2">
+                                <input type="hidden" name="characterId" th:value="${character.id}">
+                                <label for="position" class="text-gray-200">Position :</label>
+                                <input type="number" name="position" th:value="${character.position}" min="0" th:max="${characters.size() - 1}" class="bg-gray-700 text-gray-200 rounded p-1 w-16">
+                            </form>
+                        </div>
+                    </div>
                 </div>           
                 <div class="mt-6 space-y-2">
                     <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}" 
-                       class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour au profil</a>
+                    class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour au profil</a>
                     <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
                 </div>
             </div>

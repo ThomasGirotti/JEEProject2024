@@ -29,14 +29,17 @@ public class CollectionController {
     @RequestParam(value = "sortBy", required = false, defaultValue = "custom") String sortBy,
     Model model) {
         Optional<User> optionalUser;
+        boolean isVisiting;
         if (username == null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
             User user = userRepository.findByUsername(currentUsername)
             .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
             optionalUser = Optional.of(user);
+            isVisiting = false;
         } else {
             optionalUser = userRepository.findByUsername(username);
+            isVisiting = true;
             if (optionalUser.isEmpty()) {
                 model.addAttribute("errorMessage", "Aucun utilisateur trouvé pour ce nom.");
                 return "search";
@@ -46,6 +49,7 @@ public class CollectionController {
         model.addAttribute("user", user);
         model.addAttribute("characters", characterService.getSortedCharactersForUser(user, sortBy));
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("isVisiting", isVisiting);
         return "collection";
     }
     
