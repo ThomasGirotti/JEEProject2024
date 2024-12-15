@@ -26,7 +26,7 @@ public class CollectionController {
     @GetMapping("/collection")
     public String getCollection(
     @RequestParam(value = "username", required = false) String username,
-    @RequestParam(value = "sortBy", required = false, defaultValue = "name") String sortBy,
+    @RequestParam(value = "sortBy", required = false, defaultValue = "custom") String sortBy,
     Model model) {
         Optional<User> optionalUser;
         if (username == null) {
@@ -58,5 +58,35 @@ public class CollectionController {
         characterService.sellCharacter(user, characterId);
         characterService.updateCall(user.getCollectionSet().getId());
         return "redirect:/collection";
+    }
+
+    @PostMapping("/collection/moveLeft")
+    public String moveCharacterLeft(@RequestParam("characterId") Long characterId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername)
+            .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        characterService.moveCharacterLeft(user, characterId);
+        return "redirect:/collection?sortBy=custom";
+    }
+
+    @PostMapping("/collection/moveRight")
+    public String moveCharacterRight(@RequestParam("characterId") Long characterId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername)
+            .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        characterService.moveCharacterRight(user, characterId);
+        return "redirect:/collection?sortBy=custom";
+    }
+
+    @PostMapping("/collection/updatePosition")
+    public String updateCharacterPosition(@RequestParam("characterId") Long characterId, @RequestParam("position") int position) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername)
+            .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        characterService.updateCharacterPosition(user, characterId, position);
+        return "redirect:/collection?sortBy=custom";
     }
 }
