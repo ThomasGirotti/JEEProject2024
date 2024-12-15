@@ -52,10 +52,15 @@
             </table>
         </div>
         <div th:if="${#lists.isEmpty(propositions)}" class="mt-6 text-center">
-            <p>Aucune proposition de trade pour vos personnages.</p>
+            <p>Aucune proposition de trade pour vos personnages</p>
         </div>
-        <div class="mt-6">
-            <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+        <div class="space-y-4">
+            <div class="mt-6">
+                <a href="javascript:history.back()" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'hôtel des trades</a>
+            </div>
+            <div class="mt-6">
+                <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+            </div>
         </div>
     </div>
 </body>
