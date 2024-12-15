@@ -34,6 +34,11 @@
                     <input type="hidden" name="characterId" th:value="${character.id}">
                     <button type="submit">Gauche</button>
                 </form>
+                <form th:action="@{/collection/updatePosition}" method="post">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <label for="position">Position :</label>
+                    <input type="number" name="position" th:value="${character.position}" min="0" th:max="${characters.size() - 1}">
+                </form>
                 <form th:action="@{/collection/moveRight}" method="post" th:if="${!iterStat.last}">
                     <input type="hidden" name="characterId" th:value="${character.id}">
                     <button type="submit">Droite</button>

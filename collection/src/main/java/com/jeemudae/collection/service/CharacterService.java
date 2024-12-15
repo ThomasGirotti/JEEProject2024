@@ -141,6 +141,19 @@ public class CharacterService {
         }
     }
 
+    @Transactional
+    public void updateCharacterPosition(User user, Long characterId, int newPosition) {
+        List<Character> characters = getCharactersForUser(user);
+        characters.sort(Comparator.comparing(Character::getPosition));
+        Character characterToMove = characters.stream()
+            .filter(character -> character.getId().equals(characterId))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Character not found"));
+        characters.remove(characterToMove);
+        characters.add(newPosition, characterToMove);
+        updateCharacterPositions(characters);
+    }
+
     private void updateCharacterPositions(List<Character> characters) {
         for (int i = 0; i < characters.size(); i++) {
             System.out.println("Updating position of character: " + characters.get(i).getName() + " to " + i);
