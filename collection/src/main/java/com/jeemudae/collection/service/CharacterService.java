@@ -1,5 +1,6 @@
 package com.jeemudae.collection.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,5 +88,16 @@ public class CharacterService {
             characterRepository.save(character);
         }
         characterRepository.delete(character);
+    }
+
+    public List<Character> getSortedCharactersForUser(User user, String sortBy) {
+        CollectionSet collectionSet = user.getCollectionSet();
+        List<Character> characters = characterRepository.findByCollectionSet(collectionSet);
+        switch (sortBy.toLowerCase()) {
+            case "price" -> characters.sort(Comparator.comparingInt(Character::getPrice).reversed());
+            case "name" -> characters.sort(Comparator.comparing(Character::getName));
+            default -> throw new IllegalArgumentException("Critère de tri invalide : " + sortBy);
+        }
+        return characters;
     }
 }

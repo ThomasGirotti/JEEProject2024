@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Collection </title>
 </head>
@@ -8,6 +8,15 @@
     <div th:if="${error}" style="color: red;">
         <p th:text="${error}"></p>
     </div>
+    <form th:action="@{/collection}" method="get">
+        <input type="hidden" name="username" th:value="${user.username}">
+        <label for="sortBy">Trier par :</label>
+        <select name="sortBy" id="sortBy">
+            <option value="name" th:selected="${sortBy == 'name'}">Nom</option>
+            <option value="price" th:selected="${sortBy == 'price'}">Prix</option>
+        </select>
+        <button type="submit">Trier</button>
+    </form>
     <ul>
         <li th:each="character : ${characters}">
             <strong th:text="${character.name}"></strong>: 
