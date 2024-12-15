@@ -121,6 +121,7 @@ public class CharacterService {
                 break;
             }
         }
+        updateCharacterPositions(characters);
     }
 
     @Transactional
@@ -139,6 +140,7 @@ public class CharacterService {
                 break;
             }
         }
+        updateCharacterPositions(characters);
     }
 
     @Transactional
@@ -154,7 +156,7 @@ public class CharacterService {
         updateCharacterPositions(characters);
     }
 
-    private void updateCharacterPositions(List<Character> characters) {
+    public void updateCharacterPositions(List<Character> characters) {
         for (int i = 0; i < characters.size(); i++) {
             System.out.println("Updating position of character: " + characters.get(i).getName() + " to " + i);
             characters.get(i).setPosition(i);

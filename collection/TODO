@@ -4,18 +4,13 @@
 - ✅ Consulter les autres profils
 - ✅ Ajouter characters (admin)
 - ✅ Remove characters (admin)
-- 🔄 Page de rolls
+- ✅ Page de rolls
 - ✅ Monnaie (cash)
 - ✅ Trier collection
 - ✅ Vente de characters
 - ✅ Hotel des ventes
 - ✅ Top characters (valeur) + tri potentiel
 - ✅ Top joueurs (valeur) + tri potentiel
-
-## Page Home 🔄
-
-- 🔄 Header connexion/création de compte
-- 🔄 Boutons d accès aux sections
 
 ## Page Connexion 🔄
 
@@ -62,5 +57,5 @@
 
 # TODO list des bugs
 
-- 🔄 Vente de characters des autres collections (search profile)
+- ✅ Vente de characters des autres collections (search profile)
 - 🔄 Index de la liste (position) à refaire quand update collectionSet
