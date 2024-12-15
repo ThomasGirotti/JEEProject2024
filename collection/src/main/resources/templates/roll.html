@@ -30,13 +30,18 @@
                             <h3 th:text="${character.name}" 
                                 class="text-lg font-bold mb-2 text-gray-100"></h3>
                             <p class="text-gray-300 mb-4">Prix : <span th:text="${character.price}"></span></p>
-                            <form th:action="@{/roll/claim}" method="post">
-                                <input type="hidden" name="characterId" th:value="${character.id}">
-                                <button type="submit" 
-                                        class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">
-                                    Claim
-                                </button>
-                            </form>
+                            <div th:if="${character.collectionSet == null}">
+                                <form th:action="@{/roll/claim}" method="post">
+                                    <input type="hidden" name="characterId" th:value="${character.id}">
+                                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Claim</button>
+                                </form>
+                            </div>
+                            <div th:if="${(character.collectionSet != null) && (character.collectionSet.user.username == user.username)}">
+                                <form th:action="@{/roll/claim}" method="post">
+                                    <input type="hidden" name="characterId" th:value="${character.id}">
+                                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Boost</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
