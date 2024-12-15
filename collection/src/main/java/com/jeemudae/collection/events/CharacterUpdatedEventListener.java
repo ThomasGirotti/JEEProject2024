@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import com.jeemudae.collection.repository.CollectionSet;
+import com.jeemudae.collection.service.CharacterService;
 import com.jeemudae.collection.service.CollectionSetService;
 
 @Component
@@ -13,6 +14,9 @@ public class CharacterUpdatedEventListener {
     
     @Autowired
     CollectionSetService collectionSetService;
+    
+    @Autowired
+    CharacterService characterService;
     
     @Async
     @EventListener
@@ -23,6 +27,7 @@ public class CharacterUpdatedEventListener {
         System.out.println("Collection to recalculate : " + collectionSet);
         if (collectionSet != null) {
             collectionSetService.recalculateCollectionSet(collectionSet);
+            characterService.updateCharacterPositions(collectionSet.getCharacters());
             System.out.println("Recalculated collection set, END");
         } else {
             System.out.println("Collection set associated is null");
