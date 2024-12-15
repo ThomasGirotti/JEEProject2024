@@ -33,6 +33,12 @@ public class UserController {
         model.addAttribute("user", userToDisplay);
         model.addAttribute("collectionSet", userToDisplay.getCollectionSet());
         model.addAttribute("following", following);
+        model.addAttribute("canRoll", userService.canRoll(currentUser));
+        model.addAttribute("canClaim", userService.canClaim(currentUser));
+        model.addAttribute("canBoost", userService.canBoost(currentUser));
+        model.addAttribute("rollTime", userService.getTimeUntilNextRoll(currentUser));
+        model.addAttribute("claimTime", userService.getTimeUntilNextClaim(currentUser));
+        model.addAttribute("boostTime", userService.getTimeUntilNextBoost(currentUser));
         return "profile";
     }
     
