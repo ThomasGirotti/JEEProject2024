@@ -2,26 +2,85 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const items = document.querySelectorAll(".animated-item");
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.remove("opacity-0", "-translate-x-full");
+                    item.classList.add("translate-x-0", "opacity-100");
+                }, index * 200); 
+            });
+        });
+    </script>
 </head>
-<body>
-    <h1>Bienvenue sur le gestionnaire de collection</h1>
-    <div sec:authorize="isAuthenticated()">
-        <a href="/roll">Page de roll</a>
-        <a href="/profile">Voir mon profil</a>
-        <a href="/collection">Voir ma collection</a>
-        <a href="/search">Rechercher un utilisateur</a>
-        <a href="/topcharacters">Voir le top des personnages</a>
-        <a href="/topusers">Classement des joueurs</a>
-        <a href="/createTrade">Trade</a> 
-        <a href="/followList">Liste des utilisateurs suivis</a>
-        <a th:if="${isAdmin}" href="/admin">Panneau Administrateur</a>
-        <form th:action="@{/logout}" method="post">
-            <button type="submit">Se déconnecter</button>
-        </form>
-    </div>
-    <div sec:authorize="isAnonymous()">
-        <a href="/login">Se connecter</a>
-        <a href="/register">Créer un compte</a>
+<body class="bg-gray-900 text-gray-200">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-6 text-center">
+            <div class="flex justify-center mb-4">
+                <img src="/images/budae.png" alt="Pablo Image" class="w-40 h-auto rounded-full animated-item opacity-0 -translate-x-full transform transition duration-500">
+            </div>
+            <h1 class="text-4xl font-bold text-gray-100 animated-item opacity-0 -translate-x-full transform transition duration-500">
+                Bienvenue sur Budae
+            </h1>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
+            <div sec:authorize="isAuthenticated()" class="space-y-4">
+                <a href="/roll" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-pink-500 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Page de roll
+                </a>
+                <a href="/profile" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-green-500 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Voir mon profil
+                </a>
+                <a href="/collection" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-green-500 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Voir ma collection
+                </a>
+                <a href="/search" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-blue-500 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Rechercher un utilisateur
+                </a>
+                <a href="/followList" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-blue-500 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Utilisateurs suivis
+                </a>
+                <a href="/createTrade" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-blue-500 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Hôtel des ventes
+                </a>
+                <a href="/topcharacters" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-yellow-600 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Top des Personnages
+                </a>
+                <a href="/topusers" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-yellow-600 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Top des Joueurs
+                </a>
+                <a th:if="${isAdmin}" href="/admin" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-red-800 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Panneau Administrateur
+                </a>
+                <form th:action="@{/logout}" method="post" class="mt-4">
+                    <button type="submit" 
+                            class="w-full py-2 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold animated-item opacity-0 -translate-x-full transform transition duration-500">
+                        Se déconnecter
+                    </button>
+                </form>
+            </div>
+            <div sec:authorize="isAnonymous()" class="text-center space-y-4">
+                <a href="/login" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mt-2 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Se connecter
+                </a>
+                <a href="/register" 
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mb-2 transform animated-item opacity-0 -translate-x-full transition duration-500 hover:scale-105">
+                   Créer un compte
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 </html>

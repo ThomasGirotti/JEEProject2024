@@ -37,7 +37,7 @@ public class TradeController {
     
     @Autowired
     private UserRepository userRepository;
-
+    
     @Autowired
     private CharacterRepository characterRepository;
     
@@ -92,13 +92,19 @@ public class TradeController {
         return "redirect:/createTrade";
     }
     
+    @GetMapping("/finalizeTrade")
+    public String finalizeTrade(@RequestParam("currentUserId") Long currentUserId, @RequestParam("otherUserId") Long otherUserId) {
+        characterService.updateCall(currentUserId);
+        characterService.updateCall(otherUserId);
+        return "redirect:/collection";
+    }
+    
     @GetMapping("/propositionsTrade")
     public String afficherPropositionsTrade(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
         List<Trade> propositions = tradeRepository.findByUser(currentUser);
-        
         if (propositions.isEmpty()) {
             System.out.println("Aucune proposition de trade trouvée.");
         }
@@ -111,23 +117,16 @@ public class TradeController {
     public String accepterTrade(@RequestParam Long tradeId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
-        User currentUser = userRepository.findByUsername(currentUsername)
-                .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
-
-        Trade trade = tradeRepository.findById(tradeId)
-                .orElseThrow(() -> new RuntimeException("Trade introuvable"));
-
+        User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        Trade trade = tradeRepository.findById(tradeId).orElseThrow(() -> new RuntimeException("Trade introuvable"));
         Character tradeCharacter = trade.getTradeCharacter();
-
         Character offeredCharacters = trade.getOfferedCharacters().get(0);
         User otherUser = offeredCharacters.getCollectionSet().getUser();
-
         for (Character offeredCharacter : trade.getOfferedCharacters()) {
             offeredCharacter.setCollectionSet(currentUser.getCollectionSet());
             offeredCharacter.setTrade(null); 
             characterRepository.save(offeredCharacter); 
         }
-
         if (tradeCharacter != null) {
             System.out.println("Transférer le personnage du trade à l'utilisateur qui a initié le trade" + tradeCharacter.getName());
             tradeCharacter.setCollectionSet(otherUser.getCollectionSet());
@@ -135,38 +134,24 @@ public class TradeController {
             tradeCharacter.setInTrade(false);
             characterRepository.save(tradeCharacter);
         }
-
         tradeRepository.delete(trade);
-
-        return "redirect:/propositionsTrade";
+        return "redirect:/finalizeTrade?currentUserId=" + currentUser.getId() + "&otherUserId=" + otherUser.getId();
     }
-
     
     @PostMapping("/refuserTrade")
     @Transactional
     public String refuserTrade(@RequestParam Long tradeId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        User currentUser = userRepository.findByUsername(currentUsername)
-                .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
-    
-        Trade trade = tradeRepository.findById(tradeId)
-                .orElseThrow(() -> new RuntimeException("Trade introuvable : ID " + tradeId));
-    
+        Trade trade = tradeRepository.findById(tradeId).orElseThrow(() -> new RuntimeException("Trade introuvable : ID " + tradeId));
         for (Character offeredCharacter : trade.getOfferedCharacters()) {
             offeredCharacter.setTrade(null);
             characterRepository.save(offeredCharacter);
         }
-    
         Character tradeCharacter = trade.getTradeCharacter();
         if (tradeCharacter != null) {
             tradeCharacter.setTrade(null);
             characterRepository.save(tradeCharacter);
         }
-    
         tradeRepository.delete(trade);
-    
         return "redirect:/propositionsTrade";
     }
-
 }

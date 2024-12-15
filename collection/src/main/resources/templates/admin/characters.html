@@ -1,41 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>Character management</title>
+    <title>Gestion Personnages</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Ajouter un nouveau personnage</h1>
-    <div th:if="${error}" style="color: red;">
-        <p th:text="${error}"></p>
+<body class="bg-gray-900 text-gray-200">
+    <div class="min-h-screen flex flex-col items-center justify-center py-10">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-100">Ajouter un nouveau personnage</h1>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-2xl">
+            <div th:if="${error}" class="text-red-500 mb-4">
+                <p th:text="${error}"></p>
+            </div>
+            <ul class="space-y-4">
+                <li th:each="character : ${characters}" class="bg-gray-700 p-4 rounded-lg">
+                    <strong th:text="${character.name}" class="text-lg font-bold"></strong>:
+                    <img th:src="@{'/uploads/' + ${character.imagePath}}" 
+                         alt="Image du personnage" 
+                         class="w-full max-w-xs max-h-40 object-contain mt-2 mb-2 rounded-md">
+                    <br>
+                    Prix : <span th:text="${character.price}"></span>
+                    <br>
+                    Claimed : <span th:text="${character.collectionSet != null ? 'Oui' : 'Non'}"></span>
+                    <br>
+                    <form th:action="@{/admin/characters/delete}" method="post" class="mt-2">
+                        <input type="hidden" name="characterId" th:value="${character.id}">
+                        <button type="submit" class="py-2 px-4 bg-red-600 hover:bg-red-500 rounded text-gray-200 transition transform hover:scale-105">Supprimer</button>
+                    </form>
+                </li>
+            </ul>
+            <form th:action="@{/admin/characters/add}" method="post" enctype="multipart/form-data" class="mt-6 space-y-6">
+                <div class="space-y-4 bg-gray-700 p-6 rounded-lg shadow-lg">
+                    <div class="flex flex-col">
+                        <label for="name" class="text-sm font-medium text-gray-300 mb-1">Nom :</label>
+                        <input type="text" id="name" name="name" required 
+                               class="p-2 bg-gray-800 rounded text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="price" class="text-sm font-medium text-gray-300 mb-1">Prix :</label>
+                        <input type="number" id="price" name="price" required 
+                               class="p-2 bg-gray-800 rounded text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="image" class="text-sm font-medium text-gray-300 mb-1">Image :</label>
+                        <input type="file" id="image" name="image" accept="image/*" required 
+                               class="p-2 bg-gray-800 rounded text-gray-200 focus:outline-none">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" 
+                                class="w-full py-2 bg-blue-600 hover:bg-blue-500 rounded text-gray-200 font-semibold transition transform hover:scale-105">
+                            Ajouter
+                        </button>
+                    </div>
+                </div>
+            </form>            
+            <div class="mt-6 space-y-2">
+                <a href="/admin" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour au portail Administrateur</a>
+                <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+            </div>
+        </div>
     </div>
-    <ul>
-        <li th:each="character : ${characters}">
-            <strong th:text="${character.name}"></strong>: 
-            <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
-            <br>
-            Prix : <span th:text="${character.price}"></span>
-            <br>
-            Claimed : <span th:text="${character.collectionSet != null ? 'Oui' : 'Non'}"></span>
-            <br>
-            <form th:action="@{/admin/characters/delete}" method="post">
-                <input type="hidden" name="characterId" th:value="${character.id}">
-                <button type="submit">Supprimer</button>
-            </form>
-        </li>
-    </ul>
-    <form th:action="@{/admin/characters/add}" method="post" enctype="multipart/form-data">
-        <label for="name">Nom :</label>
-        <input type="text" id="name" name="name" required>
-        <br>
-        <label for="price">Prix :</label>
-        <input type="number" id="price" name="price" required>
-        <br>
-        <label for="image">Image :</label>
-        <input type="file" id="image" name="image" accept="image/*" required>
-        <br>
-        <button type="submit">+</button>
-    </form>
-    <a href="/admin">Retour au portail Administrateur</a>
-    <a href="/">Retour à l'accueil</a>
+    <div class="fixed bottom-4 right-4 flex flex-col gap-2">
+        <a href="#" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Haut</a>
+        <button onclick="window.scrollTo(0, document.body.scrollHeight);" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Bas</button>
+    </div>
 </body>
 </html>

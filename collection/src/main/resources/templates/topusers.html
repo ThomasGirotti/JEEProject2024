@@ -3,26 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>Classement des joueurs</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Classement des joueurs par valeur de collection</h1>
-    <table border="1" cellpadding="10" style="border-collapse: collapse; text-align: left; width: 100%;">
-        <thead>
-            <tr>
-                <th>Rang</th>
-                <th>Nom</th>
-                <th>Valeur totale de la collection</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="user, iterStat : ${topUsers}">
-                <td th:text="${iterStat.index + 1}"></td>
-                <td th:text="${user.username}"></td>
-                <td th:text="${user.collectionSet.totalValue}"></td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <a href="/" style="text-decoration: none;">Retour à l'accueil</a>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col items-center py-8">
+    <h1 class="text-4xl font-bold mb-6 text-gray-100">Classement des joueurs par valeur de collection</h1>
+    
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <table class="table-auto w-full text-left text-gray-200 border-collapse">
+            <thead class="bg-gray-700">
+                <tr>
+                    <th class="py-2 px-4 border-b border-gray-600">Rang</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Nom</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Valeur totale de la collection</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user, iterStat : ${topUsers}" class="hover:bg-gray-700 transition-colors transition duration-500">
+                    <td th:text="${iterStat.index + 1}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td th:text="${user.username}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td th:text="${user.collectionSet.totalValue}" class="py-2 px-4 border-b border-gray-600"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6">
+        <a href="/" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 text-center">Retour à l'accueil</a>
+    </div>
 </body>
 </html>

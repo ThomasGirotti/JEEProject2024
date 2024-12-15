@@ -2,16 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Recherche</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Recherche d'utilisateur</h1>
-    <div th:if="${errorMessage}" style="color: red;">
-        <p th:text="${errorMessage}"></p>
+<body class="bg-gray-900 text-gray-200 flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-center">Rechercher un utilisateur</h1>
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div th:if="${errorMessage}" class="text-red-500 mb-4">
+            <p th:text="${errorMessage}"></p>
+        </div>
+        <form th:action="@{/profile}" method="get" class="space-y-4">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-200">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" placeholder="Entrer un nom d'utilisateur" required class="mt-1 block w-full px-3 py-2 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-gray-700 text-gray-200">
+            </div>
+            <div>
+                <button type="submit" class="w-full bg-gray-600 transition duration-500 hover:bg-gray-500 text-gray-200 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Rechercher</button>
+            </div>
+        </form>
+        <div class="mt-6">
+            <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+        </div>
     </div>
-    <form th:action="@{/profile}" method="get">
-        <label for="username">Nom d'utilisateur :</label>
-        <input type="text" id="username" name="username" placeholder="Entrer un nom d'utilisateur" required>
-        <button type="submit">Rechercher</button>
-    </form>
 </body>
 </html>

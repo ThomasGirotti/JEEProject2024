@@ -3,29 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Top personnages</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Top des personnages </h1>
-    <table border="1" cellpadding="10" style="border-collapse: collapse; text-align: left; width: 100%;">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Valeur</th>
-                <th>Image</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="character : ${characters}">
-                <td th:text="${character.name}"></td>
-                <td th:text="${character.price}"></td>
-                <td>
-                    <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage"
-                         style="max-width: 100px; max-height: 100px; display: block;">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <a href="/" style="text-decoration: none;">Retour à l'accueil</a>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col items-center py-8">
+    <h1 class="text-4xl font-bold mb-6 text-gray-100">Top des personnages</h1>
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <table class="table-auto w-full text-left text-gray-200 border-collapse">
+            <thead class="bg-gray-700">
+                <tr>
+                    <th class="py-2 px-4 border-b border-gray-600">Nom</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Valeur</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="character : ${characters}" class="hover:bg-gray-700 transition-colors transition duration-500">
+                    <td th:text="${character.name}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td th:text="${character.price}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td class="py-2 px-4 border-b border-gray-600">
+                        <img th:src="@{'/uploads/' + ${character.imagePath}}" 
+                             alt="Image du personnage" 
+                             class="w-24 h-auto object-contain rounded-md">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-6">
+        <a href="/" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 text-center">Retour à l'accueil</a>
+    </div>
+    <div class="fixed bottom-4 right-4 flex flex-col gap-2">
+        <a href="#" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Haut</a>
+        <button onclick="window.scrollTo(0, document.body.scrollHeight);" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Bas</button>
+    </div>
 </body>
 </html>

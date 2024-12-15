@@ -65,11 +65,12 @@ public class UserService {
     }
 
     public boolean canBoost(User user) {
-        LocalDateTime now = LocalDateTime.now();
-        if (user.getLastBoostTime() == null) {
-            return true;
-        }
-        return user.getLastBoostTime().isBefore(now.minusHours(1));
+        // LocalDateTime now = LocalDateTime.now();
+        // if (user.getLastBoostTime() == null) {
+        //     return true;
+        // }
+        // return user.getLastBoostTime().isBefore(now.minusHours(1));
+        return true;
     }
 
     public void updateRollTime(User user) {

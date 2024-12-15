@@ -3,62 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Roll des Personnages</title>
-    <style>
-        .character-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .character {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: center;
-            width: 150px;
-        }
-        .character img {
-            width: 100%;
-            height: auto;
-        }
-        .error {
-            color: red;
-            font-weight: bold;
-        }
-    </style>
+    <title>Roll</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Roll des Personnages</h1>
-    <div th:if="${error}" class="error">
-        <p th:text="${error}" style="color: red;"></p>
-    </div>
-    <form th:action="@{/roll}" method="post">
-        <button type="submit">Faire un Roll</button>
-    </form>
-    <div th:if="${characters != null}" class="character-list">
-        <h2>Résultats du Roll</h2>
-        <div th:each="character : ${characters}" class="character">
-            <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage">
-            <h3 th:text="${character.name}"></h3>
-            <p>Prix : <span th:text="${character.price}"></span></p>
-            <div th:if="${character.collectionSet == null}">
-                <form th:action="@{/roll/claim}" method="post">
-                    <input type="hidden" name="characterId" th:value="${character.id}">
-                    <button type="submit">Claim</button>
+
+<body class="bg-gray-900 text-gray-200 py-2">
+    <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl font-bold text-gray-100">Roll des Personnages</h1>
+        </div>
+        <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-4xl">
+            <div th:if="${error}" class="error mb-4">
+                <p th:text="${error}" class="text-red-500 font-bold"></p>
+            </div>
+            <div th:if="${characters != null}">
+                <h2 class="text-xl font-semibold mb-4">Résultats du Roll : </h2>
+                <div class="character-list grid grid-cols-5 gap-6">
+                    <div th:each="character : ${characters}" 
+                        class="character bg-gray-700 p-4 rounded-lg shadow-md text-center opacity-0 transform transition-all duration-1000 ease-out hover:scale-105">
+                        <div class="flex flex-col items-center">
+                            <div class="w-32 h-32 bg-gray-600 rounded-lg overflow-hidden mb-4">
+                                <img th:src="@{'/uploads/' + ${character.imagePath}}" 
+                                    alt="Image du personnage" 
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <h3 th:text="${character.name}" 
+                                class="text-lg font-bold mb-2 text-gray-100"></h3>
+                            <p class="text-gray-300 mb-4">Prix : <span th:text="${character.price}"></span></p>
+                            <div th:if="${character.collectionSet == null}">
+                                <form th:action="@{/roll/claim}" method="post">
+                                    <input type="hidden" name="characterId" th:value="${character.id}">
+                                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Claim</button>
+                                </form>
+                            </div>
+                            <div th:if="${(character.collectionSet != null) && (character.collectionSet.user.username == user.username)}">
+                                <form th:action="@{/roll/claim}" method="post">
+                                    <input type="hidden" name="characterId" th:value="${character.id}">
+                                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Boost</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${characters == null}" class="mt-6 text-center">
+                <p>Appuyez sur le bouton "Faire un Roll" pour découvrir des personnages !</p>
+            </div>
+            <div class="mt-6 text-center">
+                <form th:action="@{/roll}" method="post" class="mb-6">
+                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold transform hover:scale-105 transition duration-300 ease-in-out">Faire un Roll</button>
                 </form>
             </div>
-            <div th:if="${(character.collectionSet != null) && (character.collectionSet.user.username == user.username)}">
-                <form th:action="@{/roll/claim}" method="post">
-                    <input type="hidden" name="characterId" th:value="${character.id}">
-                    <button type="submit">Boost</button>
-                </form>
+            <div class="mt-6"></div>
+                <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
             </div>
         </div>
     </div>
-    <div th:if="${characters == null}">
-        <p>Appuyez sur le bouton pour découvrir des personnages !</p>
-    </div>
-    <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}">Retour au profil</a>
-    <a th:href="${user.username == #authentication.name} ? '/collection' : '/collection?username=' + ${user.username}">Voir la collection</a>
-    <a href="/">Retour à l'accueil</a>
 </body>
-</html>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const characters = document.querySelectorAll('.character');
+        characters.forEach((character, index) => {
+            setTimeout(() => {
+                character.classList.remove('opacity-0');
+                character.classList.add('opacity-100');
+            }, index * 500);
+        });
+    });
+</script>
