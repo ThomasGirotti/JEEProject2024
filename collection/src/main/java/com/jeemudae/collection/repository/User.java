@@ -44,6 +44,9 @@ public class User {
     @Column(nullable = true)
     private LocalDateTime lastClaimTime;
 
+    @Column(nullable = true)
+    private LocalDateTime lastBoostTime;
+
     @ManyToMany
     @JoinTable(
         name = "user_follow",
@@ -154,5 +157,13 @@ public class User {
 
     public void setLastClaimTime(LocalDateTime lastClaimTime) {
         this.lastClaimTime = lastClaimTime;
+    }
+
+    public LocalDateTime getLastBoostTime() {
+        return lastBoostTime;
+    }
+
+    public void setLastBoostTime(LocalDateTime lastBoostTime) {
+        this.lastBoostTime = lastBoostTime;
     }
 }

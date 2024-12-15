@@ -1,5 +1,6 @@
 package com.jeemudae.collection.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -11,19 +12,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jeemudae.collection.repository.Character;
+import com.jeemudae.collection.repository.CharacterRepository;
 import com.jeemudae.collection.service.CharacterService;
 import com.jeemudae.collection.service.FileStorageService;
 
 @Controller
 @RequestMapping("/admin/characters")
 public class CharacterAdminController {
-    private final CharacterService characterService;
-    private final FileStorageService fileStorageService;
+    @Autowired
+    private CharacterService characterService;
+    
+    @Autowired
+    private FileStorageService fileStorageService;
 
-    public CharacterAdminController(CharacterService characterService, FileStorageService fileStorageService) {
-        this.characterService = characterService;
-        this.fileStorageService = fileStorageService;
-    }
+    @Autowired
+    private CharacterRepository characterRepository;
+
 
     @GetMapping
     public String viewCharacters(Model model) {
@@ -46,7 +50,7 @@ public class CharacterAdminController {
         character.setName(name);
         character.setPrice(price);
         character.setImagePath(filename);
-        characterService.saveCharacter(character);
+        characterRepository.save(character);
         return "redirect:/admin/characters";
     }
 

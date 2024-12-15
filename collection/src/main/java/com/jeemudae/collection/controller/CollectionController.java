@@ -2,11 +2,13 @@ package com.jeemudae.collection.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jeemudae.collection.repository.User;
@@ -14,13 +16,12 @@ import com.jeemudae.collection.repository.UserRepository;
 import com.jeemudae.collection.service.CharacterService;
 @Controller
 public class CollectionController {
-    private final CharacterService characterService;
-    private final UserRepository userRepository;
 
-    public CollectionController(CharacterService characterService, UserRepository userRepository) {
-        this.characterService = characterService;
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private CharacterService characterService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/collection")
     public String getCollection(@RequestParam(value = "username", required = false) String username, Model model) {
@@ -42,5 +43,16 @@ public class CollectionController {
         model.addAttribute("user", user);
         model.addAttribute("characters", characterService.getCharactersForUser(user));
         return "collection";
+    }
+
+    @PostMapping("/collection/sell")
+    public String sellCharacter(@RequestParam("characterId") Long characterId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        characterService.sellCharacter(user, characterId);
+        characterService.updateCall(user.getCollectionSet().getId());
+        return "redirect:/collection";
     }
 }

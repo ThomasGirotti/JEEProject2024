@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,14 +40,25 @@
             <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage">
             <h3 th:text="${character.name}"></h3>
             <p>Prix : <span th:text="${character.price}"></span></p>
-            <form th:action="@{/roll/claim}" method="post">
-                <input type="hidden" name="characterId" th:value="${character.id}">
-                <button type="submit">Claim</button>
-            </form>
+            <div th:if="${character.collectionSet == null}">
+                <form th:action="@{/roll/claim}" method="post">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <button type="submit">Claim</button>
+                </form>
+            </div>
+            <div th:if="${(character.collectionSet != null) && (character.collectionSet.user.username == user.username)}">
+                <form th:action="@{/roll/claim}" method="post">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <button type="submit">Boost</button>
+                </form>
+            </div>
         </div>
     </div>
     <div th:if="${characters == null}">
         <p>Appuyez sur le bouton pour découvrir des personnages !</p>
     </div>
+    <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}">Retour au profil</a>
+    <a th:href="${user.username == #authentication.name} ? '/collection' : '/collection?username=' + ${user.username}">Voir la collection</a>
+    <a href="/">Retour à l'accueil</a>
 </body>
 </html>

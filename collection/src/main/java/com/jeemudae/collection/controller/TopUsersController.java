@@ -2,6 +2,7 @@ package com.jeemudae.collection.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,8 @@ import com.jeemudae.collection.service.UserService;
 @Controller
 public class TopUsersController {
 
-    private final UserService userService;
-
-    public TopUsersController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/topusers")
     public String getTopUsers(Model model) {
