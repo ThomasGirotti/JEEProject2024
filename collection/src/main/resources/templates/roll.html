@@ -19,15 +19,32 @@
             <div th:if="${characters != null}">
                 <h2 class="text-xl font-semibold mb-4">Résultats du Roll : </h2>
                 <div class="character-list grid grid-cols-5 gap-6">
-                    <div th:each="character : ${characters}" class="character bg-gray-700 p-4 rounded-lg shadow-md text-center opacity-0 transition-opacity duration-1500 transform hover:scale-105 transition-transform duration-300">
-                        <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="w-full h-auto mb-4 rounded">
-                        <h3 th:text="${character.name}" class="text-lg font-bold mb-2"></h3>
-                        <p>Prix : <span th:text="${character.price}"></span></p>
-                        <form th:action="@{/roll/claim}" method="post" class="mt-4">
-                            <input type="hidden" name="characterId" th:value="${character.id}">
-                            <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Claim</button>
-                        </form>
-                    </div>                    
+                    <div th:each="character : ${characters}" 
+                        class="character bg-gray-700 p-4 rounded-lg shadow-md text-center opacity-0 transform transition-all duration-1000 ease-out hover:scale-105">
+                        <div class="flex flex-col items-center">
+                            <!-- Image ajustée -->
+                            <div class="w-32 h-32 bg-gray-600 rounded-lg overflow-hidden mb-4">
+                                <img th:src="@{'/uploads/' + ${character.imagePath}}" 
+                                    alt="Image du personnage" 
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <!-- Nom -->
+                            <h3 th:text="${character.name}" 
+                                class="text-lg font-bold mb-2 text-gray-100"></h3>
+                            <!-- Prix -->
+                            <p class="text-gray-300 mb-4">Prix : <span th:text="${character.price}"></span></p>
+                            <!-- Bouton Claim -->
+                            <form th:action="@{/roll/claim}" method="post">
+                                <input type="hidden" name="characterId" th:value="${character.id}">
+                                <button type="submit" 
+                                        class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">
+                                    Claim
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    
                 </div>
             </div>
             <div th:if="${characters == null}" class="mt-6 text-center">
@@ -53,7 +70,7 @@
             setTimeout(() => {
                 character.classList.remove('opacity-0');
                 character.classList.add('opacity-100');
-            }, index * 1000);
+            }, index * 500); // Délai de 500ms entre chaque apparition
         });
     });
 </script>
