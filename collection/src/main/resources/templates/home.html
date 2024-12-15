@@ -28,11 +28,11 @@
                    Rechercher un utilisateur
                 </a>
                 <a href="/topcharacters" 
-                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-gray-300 transform hover:scale-105 transition duration-200 ease-in-out">
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-yellow-600 transform hover:scale-105 transition duration-200 ease-in-out">
                    Top des Personnages
                 </a>
                 <a href="/topusers" 
-                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-gray-300 transform hover:scale-105 transition duration-200 ease-in-out">
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 border-b-2 border-yellow-600 transform hover:scale-105 transition duration-200 ease-in-out">
                    Top des Joueurs
                 </a>
                 <a th:if="${isAdmin}" href="/admin" 
@@ -46,16 +46,17 @@
                     </button>
                 </form>
             </div>
-            <div sec:authorize="isAnonymous()" class="mt-6 text-center">
+            <div sec:authorize="isAnonymous()" class="text-center space-y-4">
                 <a href="/login" 
-                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mb-2">
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mt-2 transform hover:scale-105 transition duration-200 ease-in-out">
                    Se connecter
                 </a>
                 <a href="/register" 
-                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">
+                   class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 mb-2 transform hover:scale-105 transition duration-200 ease-in-out">
                    Créer un compte
                 </a>
             </div>
+            
         </div>
     </div>
 </body>
