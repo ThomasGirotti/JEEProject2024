@@ -18,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user, iterStat : ${topUsers}" class="hover:bg-gray-700 transition-colors">
+                <tr th:each="user, iterStat : ${topUsers}" class="hover:bg-gray-700 transition-colors transition duration-500">
                     <td th:text="${iterStat.index + 1}" class="py-2 px-4 border-b border-gray-600"></td>
                     <td th:text="${user.username}" class="py-2 px-4 border-b border-gray-600"></td>
                     <td th:text="${user.collectionSet.totalValue}" class="py-2 px-4 border-b border-gray-600"></td>
