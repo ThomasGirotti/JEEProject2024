@@ -1,6 +1,6 @@
 package com.jeemudae.collection.controller;
 
-import java.util.Optional;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,24 +28,21 @@ public class CollectionController {
     @RequestParam(value = "username", required = false) String username,
     @RequestParam(value = "sortBy", required = false, defaultValue = "custom") String sortBy,
     Model model) {
-        Optional<User> optionalUser;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User currentUser = userRepository.findByUsername(currentUsername).orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
+        User user;
         boolean isVisiting;
         if (username == null) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String currentUsername = authentication.getName();
-            User user = userRepository.findByUsername(currentUsername)
-            .orElseThrow(() -> new RuntimeException("Utilisateur connecté non trouvé"));
-            optionalUser = Optional.of(user);
-            isVisiting = false;
+            user = currentUser;
         } else {
-            optionalUser = userRepository.findByUsername(username);
-            isVisiting = true;
-            if (optionalUser.isEmpty()) {
+            user = userRepository.findByUsername(username).get();
+            if (user == null) {
                 model.addAttribute("errorMessage", "Aucun utilisateur trouvé pour ce nom.");
                 return "search";
             }
         }
-        User user = optionalUser.get();
+        isVisiting = !Objects.equals(currentUser.getId(), user.getId());
         model.addAttribute("user", user);
         model.addAttribute("characters", characterService.getSortedCharactersForUser(user, sortBy));
         model.addAttribute("sortBy", sortBy);
