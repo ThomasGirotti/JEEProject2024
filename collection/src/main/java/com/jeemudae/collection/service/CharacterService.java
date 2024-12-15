@@ -18,18 +18,6 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class CharacterService {
-<<<<<<< HEAD
-    private final CollectionSetRepository collectionSetRepository;
-    private final CharacterRepository characterRepository;
-    private final ApplicationEventPublisher eventPublisher;
-    
-    public CharacterService(CharacterRepository characterRepository, ApplicationEventPublisher eventPublisher, CollectionSetRepository collectionSetRepository) {
-        this.collectionSetRepository = collectionSetRepository;
-        this.characterRepository = characterRepository;
-        this.eventPublisher = eventPublisher;
-    }
-    
-=======
 
     @Autowired
     private CollectionSetRepository collectionSetRepository;
@@ -43,7 +31,6 @@ public class CharacterService {
     @Autowired
     private UserRepository userRepository;
 
->>>>>>> origin/main
     public List<Character> getAllCharacters() {
         return characterRepository.findAll();
     }
@@ -60,7 +47,6 @@ public class CharacterService {
     public List<Character> getAllCharactersSortedByPriceDesc() {
         return characterRepository.findAllByOrderByPriceDesc(); 
     }
-<<<<<<< HEAD
     
     public List<Character> getCharactersInTrade() {
         return characterRepository.findByInTrade(true); 
@@ -69,10 +55,7 @@ public class CharacterService {
     public List<Character> getCharactersByIds(List<Long> characterIds) {
         return characterRepository.findAllById(characterIds);
     }
-    
-=======
 
->>>>>>> origin/main
     @Transactional
     public void updateCall(long collectionId) {
         CollectionSet collectionSet = collectionSetRepository.findById(collectionId).orElseThrow();
