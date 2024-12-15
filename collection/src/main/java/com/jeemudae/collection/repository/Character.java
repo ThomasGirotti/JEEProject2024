@@ -37,6 +37,9 @@ public class Character {
     @JoinColumn(name = "trade_id", nullable = true)
     private Trade trade;
     
+    @Column(nullable=false)
+    private int position;
+
     public Character() {
     }
     
@@ -97,5 +100,13 @@ public class Character {
     
     public void setCollectionSet(CollectionSet collectionSet) {
         this.collectionSet = collectionSet;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 }

@@ -6,7 +6,7 @@
 - ✅ Remove characters (admin)
 - 🔄 Page de rolls
 - ✅ Monnaie (cash)
-- ❌ Trier collection
+- 🔄 Trier collection
 - ✅ Vente de characters
 - ❌ Trade entre joueurs
 - 🔄 Hotel des ventes
@@ -41,7 +41,8 @@
 
 - ✅ Liste des characters du joueur
 - ✅ Bouton de vente
-- 🔄 Bouton de tri
+- ✅ Sélecteur de tri
+- 🔄 Tri manuel
 
 ## Page Search 🔄
 
