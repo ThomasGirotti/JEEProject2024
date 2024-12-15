@@ -24,7 +24,7 @@
                     <td class="px-6 py-4 whitespace-nowrap" th:text="${character.name}">Nom du personnage</td>
                     <td class="px-6 py-4 whitespace-nowrap" th:text="${character.price}">Prix</td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="max-w-xs max-h-xs block">
+                        <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="w-32 h-32 object-cover rounded-lg">
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <form action="/proposerTrade" method="POST">
