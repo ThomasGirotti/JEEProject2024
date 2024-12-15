@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Collection </title>
 </head>
@@ -8,8 +8,18 @@
     <div th:if="${error}" style="color: red;">
         <p th:text="${error}"></p>
     </div>
+    <form th:action="@{/collection}" method="get">
+        <input type="hidden" name="username" th:value="${user.username}">
+        <label for="sortBy">Trier par :</label>
+        <select name="sortBy" id="sortBy">
+            <option value="name" th:selected="${sortBy == 'name'}">Nom</option>
+            <option value="price" th:selected="${sortBy == 'price'}">Prix</option>
+            <option value="custom" th:selected="${sortBy == 'custom'}">Personnalisé</option>
+        </select>
+        <button type="submit">Trier</button>
+    </form>
     <ul>
-        <li th:each="character : ${characters}">
+        <li th:each="character, iterStat : ${characters}">
             <strong th:text="${character.name}"></strong>: 
             <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
             <br>
@@ -19,6 +29,21 @@
                 <input type="hidden" name="characterId" th:value="${character.id}">
                 <button type="submit">Vendre</button>
             </form>
+            <div th:if="${sortBy == 'custom'}">
+                <form th:action="@{/collection/moveLeft}" method="post" th:if="${!iterStat.first}">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <button type="submit">Gauche</button>
+                </form>
+                <form th:action="@{/collection/updatePosition}" method="post">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <label for="position">Position :</label>
+                    <input type="number" name="position" th:value="${character.position}" min="0" th:max="${characters.size() - 1}">
+                </form>
+                <form th:action="@{/collection/moveRight}" method="post" th:if="${!iterStat.last}">
+                    <input type="hidden" name="characterId" th:value="${character.id}">
+                    <button type="submit">Droite</button>
+                </form>
+            </div>
         </li>
     </ul>
     <a href="/">Retour à l'accueil</a>

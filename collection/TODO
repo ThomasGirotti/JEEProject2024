@@ -6,10 +6,9 @@
 - ✅ Remove characters (admin)
 - 🔄 Page de rolls
 - ✅ Monnaie (cash)
-- ❌ Trier collection
+- ✅ Trier collection
 - ✅ Vente de characters
-- ❌ Trade entre joueurs
-- 🔄 Hotel des ventes
+- ✅ Hotel des ventes
 - ✅ Top characters (valeur) + tri potentiel
 - ✅ Top joueurs (valeur) + tri potentiel
 
@@ -41,7 +40,8 @@
 
 - ✅ Liste des characters du joueur
 - ✅ Bouton de vente
-- 🔄 Bouton de tri
+- ✅ Sélecteur de tri
+- ✅ Tri manuel
 
 ## Page Search 🔄
 
@@ -59,3 +59,8 @@
 - ✅ Affichage des characters
 - ✅ Gestion des characters deja claim
 - 🔄 CD des rolls et du boost
+
+# TODO list des bugs
+
+- 🔄 Vente de characters des autres collections (search profile)
+- 🔄 Index de la liste (position) à refaire quand update collectionSet

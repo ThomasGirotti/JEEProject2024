@@ -1,7 +1,6 @@
 package com.jeemudae.collection.service;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,19 +47,21 @@ public class UserService {
     }
 
     public boolean canRoll(User user) {
-        LocalDateTime now = LocalDateTime.now();
-        if (user.getLastRollTime() == null) {
-            return true;
-        }
-        return user.getLastRollTime().isBefore(now.truncatedTo(ChronoUnit.HOURS));
+        // LocalDateTime now = LocalDateTime.now();
+        // if (user.getLastRollTime() == null) {
+        //     return true;
+        // }
+        // return user.getLastRollTime().isBefore(now.truncatedTo(ChronoUnit.HOURS));
+        return true;
     }
 
     public boolean canClaim(User user) {
-        LocalDateTime now = LocalDateTime.now();
-        if (user.getLastClaimTime() == null) {
-            return true;
-        }
-        return user.getLastClaimTime().isBefore(now.minusHours(2));
+        // LocalDateTime now = LocalDateTime.now();
+        // if (user.getLastClaimTime() == null) {
+        //     return true;
+        // }
+        // return user.getLastClaimTime().isBefore(now.minusHours(2));
+        return true;
     }
 
     public boolean canBoost(User user) {

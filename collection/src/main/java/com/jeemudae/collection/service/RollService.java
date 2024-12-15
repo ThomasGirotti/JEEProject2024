@@ -53,6 +53,8 @@ public class RollService {
         collectionSet.setCharacters(characters);
         collectionSetRepository.save(collectionSet);
         character.setCollectionSet(collectionSet);
+        int maxPosition = characters.stream().mapToInt(Character::getPosition).max().orElse(0);
+        character.setPosition(maxPosition + 1);
         characterRepository.save(character);
         userService.updateClaimTime(user);
         userRepository.save(user);
