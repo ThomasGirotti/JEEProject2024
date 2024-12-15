@@ -1,7 +1,9 @@
 package com.jeemudae.collection.repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -108,5 +110,11 @@ public class CollectionSet {
             recalculateTotalValue();
             recalculateCollectionSize();
         }
+    }
+
+    public Character getBestCharacter() {
+        Optional<Character> bestCharacter = characters.stream()
+            .max(Comparator.comparingInt(Character::getPrice));
+        return bestCharacter.orElse(null);
     }
 }

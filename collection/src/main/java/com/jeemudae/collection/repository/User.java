@@ -9,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +18,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+
 
 @Entity
 @Table(name = "users")
@@ -47,7 +49,7 @@ public class User {
     @Column(nullable = true)
     private LocalDateTime lastBoostTime;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_follow",
         joinColumns = @JoinColumn(name = "follower_id"),
@@ -56,7 +58,7 @@ public class User {
     @SuppressWarnings("FieldMayBeFinal")
     private Set<User> following = new HashSet<>();
 
-    @ManyToMany(mappedBy = "following")
+    @ManyToMany(mappedBy = "following", fetch = FetchType.EAGER)
     @SuppressWarnings("FieldMayBeFinal")
     private Set<User> followers = new HashSet<>();
 
