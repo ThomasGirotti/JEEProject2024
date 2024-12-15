@@ -15,8 +15,10 @@
             </div>
             <ul class="space-y-4">
                 <li th:each="character : ${characters}" class="bg-gray-700 p-4 rounded-lg">
-                    <strong th:text="${character.name}" class="text-lg font-bold"></strong>: 
-                    <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="max-w-xs max-h-xs mt-2 mb-2">
+                    <strong th:text="${character.name}" class="text-lg font-bold"></strong>:
+                    <img th:src="@{'/uploads/' + ${character.imagePath}}" 
+                         alt="Image du personnage" 
+                         class="w-full max-w-xs max-h-40 object-contain mt-2 mb-2 rounded-md">
                     <br>
                     Prix : <span th:text="${character.price}"></span>
                     <br>
