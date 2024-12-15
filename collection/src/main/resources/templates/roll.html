@@ -19,7 +19,7 @@
             <div th:if="${characters != null}">
                 <h2 class="text-xl font-semibold mb-4">Résultats du Roll : </h2>
                 <div class="character-list grid grid-cols-5 gap-6">
-                    <div th:each="character : ${characters}" class="character bg-gray-700 p-4 rounded-lg shadow-md text-center opacity-0 transition-opacity duration-1000">
+                    <div th:each="character : ${characters}" class="character bg-gray-700 p-4 rounded-lg shadow-md text-center opacity-0 transition-opacity duration-1500 transform hover:scale-105 transition-transform duration-300">
                         <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" class="w-full h-auto mb-4 rounded">
                         <h3 th:text="${character.name}" class="text-lg font-bold mb-2"></h3>
                         <p>Prix : <span th:text="${character.price}"></span></p>
@@ -27,7 +27,7 @@
                             <input type="hidden" name="characterId" th:value="${character.id}">
                             <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Claim</button>
                         </form>
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <div th:if="${characters == null}" class="mt-6 text-center">
@@ -35,7 +35,7 @@
             </div>
             <div class="mt-6 text-center">
                 <form th:action="@{/roll}" method="post" class="mb-6">
-                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold transition duration-300 ease-in-out">Faire un Roll</button>
+                    <button type="submit" class="py-2 px-4 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold transform hover:scale-105 transition duration-300 ease-in-out">Faire un Roll</button>
                 </form>
             </div>
             <div class="mt-6"></div>
