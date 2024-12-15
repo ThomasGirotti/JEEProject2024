@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Proposer un Trade</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Proposer un Trade</h1>
-    <h2>Personnage proposé en trade :</h2>
-    <div>
-        <p>Nom : <span th:text="${tradeCharacter.name}">Nom du personnage</span></p>
-        <p>Prix : <span th:text="${tradeCharacter.price}">Prix</span></p>
-        <img th:src="@{'/uploads/' + ${tradeCharacter.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
-    </div>
-    <h2>Vos personnages disponibles :</h2>
-    <style>
-        .checkbox-container {
-            max-height: 200px;
-            overflow-y: auto;
-        }
-    </style>
-    <form th:action="@{/submitTradeOffer}" method="post">
-        <input type="hidden" name="tradeCharacterId" th:value="${tradeCharacter.id}" />
-        <div>
-            <label>Sélectionnez les personnages à proposer :</label>
-            <div class="checkbox-container">
-                <th:block th:each="character : ${userCharacters}">
-                    <label>
-                        <input type="checkbox" name="selectedCharacters" th:value="${character.id}" />
-                        <span th:text="${character.name}"></span>
-                    </label>
-                </th:block>
-            </div>
+<body class="bg-gray-900 text-gray-200 flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-center">Proposer un Trade</h1>
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <h2 class="text-2xl font-semibold mb-4">Personnage proposé en trade :</h2>
+        <div class="mb-6">
+            <p>Nom : <span th:text="${tradeCharacter.name}">Nom du personnage</span></p>
+            <p>Prix : <span th:text="${tradeCharacter.price}">Prix</span></p>
+            <img th:src="@{'/uploads/' + ${tradeCharacter.imagePath}}" alt="Image du personnage" class="max-w-xs max-h-xs rounded-lg">
         </div>
-        <button type="submit">Soumettre l'offre</button>
-    </form>
+        <h2 class="text-2xl font-semibold mb-4">Vos personnages disponibles :</h2>
+        <form th:action="@{/submitTradeOffer}" method="post">
+            <input type="hidden" name="tradeCharacterId" th:value="${tradeCharacter.id}" />
+            <div class="mb-6">
+                <label class="block mb-2">Sélectionnez les personnages à proposer :</label>
+                <div class="checkbox-container bg-gray-700 p-4 rounded-lg max-h-48 overflow-y-auto">
+                    <th:block th:each="character : ${userCharacters}">
+                        <label class="block mb-2">
+                            <input type="checkbox" name="selectedCharacters" th:value="${character.id}" class="mr-2">
+                            <span th:text="${character.name}"></span>
+                        </label>
+                    </th:block>
+                </div>
+            </div>
+            <button type="submit" class="bg-gray-600 transition duration-500 hover:bg-gray-500 text-gray-200 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Soumettre l'offre</button>
+        </form>
+        <div class="mt-6">
+            <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+        </div>
+    </div>
 </body>
 </html>

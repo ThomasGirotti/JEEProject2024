@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Propositions de Trade</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Propositions de Trade</h1>
-    <div th:unless="${#lists.isEmpty(propositions)}">
-        <table>
-            <thead>
-                <tr>
-                    <th>Trade ID</th>
-                    <th>Personnage Offert</th>
-                    <th>Personnages Proposés</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="proposition : ${propositions}">
-                    <td th:text="${proposition.id}"></td>
-                    <td th:text="${proposition.tradeCharacter.name}"></td>
-                    <td>
-                        <ul>
-                            <li th:each="character : ${proposition.offeredCharacters}" th:text="${character.name}"></li>
-                        </ul>
-                    </td>
-                    <td>
-                        <form th:action="@{/accepterTrade}" method="post">
-                            <input type="hidden" name="tradeId" th:value="${proposition.id}" />
-                            <button type="submit">Accepter</button>
-                        </form>
-                        <form th:action="@{/refuserTrade}" method="post">
-                            <input type="hidden" name="tradeId" th:value="${proposition.id}" />
-                            <button type="submit">Refuser</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div th:if="${#lists.isEmpty(propositions)}">
-        <p>Aucune proposition de trade pour vos personnages.</p>
+<body class="bg-gray-900 text-gray-200 flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-bold mb-6 text-center">Propositions de Trade</h1>
+    <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-4xl">
+        <div th:unless="${#lists.isEmpty(propositions)}">
+            <table class="min-w-full divide-y divide-gray-700">
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Trade ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Personnage Offert</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Personnages Proposés</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-200 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-700 divide-y divide-gray-600">
+                    <tr th:each="proposition : ${propositions}">
+                        <td class="px-6 py-4 whitespace-nowrap" th:text="${proposition.id}"></td>
+                        <td class="px-6 py-4 whitespace-nowrap" th:text="${proposition.tradeCharacter.name}"></td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <ul>
+                                <li th:each="character : ${proposition.offeredCharacters}" th:text="${character.name}"></li>
+                            </ul>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <form th:action="@{/accepterTrade}" method="post" class="inline-block">
+                                <input type="hidden" name="tradeId" th:value="${proposition.id}" />
+                                <button type="submit" class="bg-gray-600 transition duration-500 hover:bg-gray-500 text-gray-200 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Accepter</button>
+                            </form>
+                            <form th:action="@{/refuserTrade}" method="post" class="inline-block">
+                                <input type="hidden" name="tradeId" th:value="${proposition.id}" />
+                                <button type="submit" class="bg-gray-600 transition duration-500 hover:bg-gray-500 text-gray-200 py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Refuser</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${#lists.isEmpty(propositions)}" class="mt-6 text-center">
+            <p>Aucune proposition de trade pour vos personnages.</p>
+        </div>
+        <div class="mt-6">
+            <a href="/" class="block py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Retour à l'accueil</a>
+        </div>
     </div>
 </body>
 </html>
