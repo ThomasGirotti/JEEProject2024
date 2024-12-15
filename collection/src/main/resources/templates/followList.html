@@ -1,34 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"></html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Following List</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Les personnes que vous suivez</h1>
-    <table border="1" cellpadding="10" style="border-collapse: collapse; text-align: left; width: 100%;">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Valeur totale de la collection</th>
-                <th>Nombre de personnages</th>
-                <th>Meilleur personnage</th>
-                <th>Image du meilleur personnage</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:if="${following != null}" th:each="user : ${following}">
-                <td><a th:href="@{/profile(username=${user.username})}" th:text="${user.username}">Username</a></td>
-                <td th:text="${user.collectionSet.totalValue}"></td>
-                <td th:text="${user.collectionSet.characters.size()}"></td>
-                <td th:text="${user.collectionSet.bestCharacter.name}"></td>
-                <td>
-                    <img th:src="@{'/uploads/' + ${user.collectionSet.bestCharacter.imagePath}}" alt="Image du meilleur personnage"
-                         style="max-width: 100px; max-height: 100px; display: block;">
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<body class="bg-gray-900 text-gray-200 min-h-screen flex flex-col items-center py-8">
+    <h1 class="text-4xl font-bold mb-6 text-gray-100">Les personnes que vous suivez</h1>
+    <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-4xl">
+        <table class="table-auto w-full text-left text-gray-200 border-collapse">
+            <thead class="bg-gray-700">
+                <tr>
+                    <th class="py-2 px-4 border-b border-gray-600">Nom</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Valeur totale de la collection</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Nombre de personnages</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Meilleur personnage</th>
+                    <th class="py-2 px-4 border-b border-gray-600">Image du meilleur personnage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${following != null}" th:each="user : ${following}" class="hover:bg-gray-700 transition-colors transition duration-500">
+                    <td class="py-2 px-4 border-b border-gray-600">
+                        <a th:href="@{/profile(username=${user.username})}" th:text="${user.username}" class="text-gray-400 hover:text-gray-300">Username</a>
+                    </td>
+                    <td th:text="${user.collectionSet.totalValue}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td th:text="${user.collectionSet.characters.size()}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td th:text="${user.collectionSet.bestCharacter.name}" class="py-2 px-4 border-b border-gray-600"></td>
+                    <td class="py-2 px-4 border-b border-gray-600">
+                        <img th:src="@{'/uploads/' + ${user.collectionSet.bestCharacter.imagePath}}" 
+                             alt="Image du meilleur personnage" 
+                             class="w-24 h-auto object-contain rounded-md">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-6">
+        <a href="/" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200 text-center">Retour à l'accueil</a>
+    </div>
 </body>
 </html>
