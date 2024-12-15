@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
     List<Character> findByCollectionSet(CollectionSet collectionSet);
+    List<Character> findAllByOrderByPriceDesc(); 
+
+
 }

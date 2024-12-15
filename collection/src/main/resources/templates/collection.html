@@ -33,5 +33,19 @@
         <a href="#" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Haut</a>
         <button onclick="window.scrollTo(0, document.body.scrollHeight);" class="py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded text-gray-200">Bas</button>
     </div>
+    <ul>
+        <li th:each="character : ${characters}">
+            <strong th:text="${character.name}"></strong>: 
+            <img th:src="@{'/uploads/' + ${character.imagePath}}" alt="Image du personnage" style="max-width: 150px; max-height: 150px;">
+            <br>
+            Prix : <span th:text="${character.price}"></span>
+            <form th:action="@{/collection/sell}" method="post">
+                <input type="hidden" name="characterId" th:value="${character.id}">
+                <button type="submit">Vendre</button>
+            </form>
+        </li>
+    </ul>
+    <a href="/">Retour à l'accueil</a>
+    <a th:href="${user.username == #authentication.name} ? '/profile' : '/profile?username=' + ${user.username}">Retour au profil</a>
 </body>
 </html>

@@ -2,6 +2,7 @@ package com.jeemudae.collection.service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import com.jeemudae.collection.repository.UserRepository;
 @Service
 public class UserService {
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public boolean isUserFollowing(String currentUsername, String profileUsername) {
@@ -59,7 +60,15 @@ public class UserService {
         if (user.getLastClaimTime() == null) {
             return true;
         }
-        return user.getLastClaimTime().isBefore(now.minusHours(3));
+        return user.getLastClaimTime().isBefore(now.minusHours(2));
+    }
+
+    public boolean canBoost(User user) {
+        LocalDateTime now = LocalDateTime.now();
+        if (user.getLastBoostTime() == null) {
+            return true;
+        }
+        return user.getLastBoostTime().isBefore(now.minusHours(1));
     }
 
     public void updateRollTime(User user) {
@@ -70,4 +79,15 @@ public class UserService {
         user.setLastClaimTime(LocalDateTime.now());
     }
 
+    public void updateBoostTime(User user) {
+        user.setLastBoostTime(LocalDateTime.now());
+    }
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public List<User> getTopUsersByCollectionValue() {
+        return userRepository.findTopUsersByCollectionValue();
+    }
 }

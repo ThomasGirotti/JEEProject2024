@@ -5,18 +5,18 @@
 - ✅ Ajouter characters (admin)
 - ✅ Remove characters (admin)
 - 🔄 Page de rolls
-- ❌ Page de rolls commune
 - ✅ Monnaie (cash)
 - ❌ Trier collection
-- ❌ Vente de characters
-- 🔄 Trade entre joueurs
-- ❌ Hotel des ventes
-- ❌ Top characters (valeur) + tri potentiel
-- ❌ Top joueurs (valeur) + tri potentiel
+- ✅ Vente de characters
+- ❌ Trade entre joueurs
+- 🔄 Hotel des ventes
+- ✅ Top characters (valeur) + tri potentiel
+- ✅ Top joueurs (valeur) + tri potentiel
 
 ## Page Home 🔄
 
 - 🔄 Header connexion/création de compte
+- 🔄 Boutons d accès aux sections
 
 ## Page Connexion 🔄
 
@@ -40,8 +40,8 @@
 ## Page Collection 🔄
 
 - ✅ Liste des characters du joueur
-- ❌ Bouton de vente
-- ❌ Bouton de tri
+- ✅ Bouton de vente
+- 🔄 Bouton de tri
 
 ## Page Search 🔄
 
@@ -57,4 +57,5 @@
 
 - ✅ Bouton de roll
 - ✅ Affichage des characters
-- 🔄 Gestion des characters deja claim
+- ✅ Gestion des characters deja claim
+- 🔄 CD des rolls et du boost
