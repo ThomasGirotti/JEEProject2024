@@ -6,6 +6,9 @@
 </head>
 <body class="bg-gray-900 text-gray-200">
     <div class="min-h-screen flex flex-col items-center justify-center">
+        <div class="mb-4">
+            <img src="/pablo.png" alt="Pablo Image" class="w-24 h-auto rounded-full">
+        </div>
         <div class="mb-6 text-center">
             <h1 class="text-4xl font-bold text-gray-100">Bienvenue sur Budae</h1>
         </div>
@@ -22,7 +25,9 @@
                 </div>
                 <button type="submit" class="w-full py-2 bg-gray-600 hover:bg-gray-500 rounded text-gray-200 font-semibold">Se connecter</button>
             </form>
-            <p class="mt-4 text-center"><a th:href="@{/register}" class="text-gray-400 hover:text-gray-300">Créer un compte</a></p>
+            <p class="mt-4 text-center">
+                <a th:href="@{/register}" class="text-gray-400 hover:text-gray-300">Créer un compte</a>
+            </p>
         </div>
     </div>
 </body>
