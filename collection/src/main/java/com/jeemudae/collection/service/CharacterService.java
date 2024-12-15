@@ -121,7 +121,6 @@ public class CharacterService {
                 break;
             }
         }
-        updateCharacterPositions(characters);
     }
 
     @Transactional
@@ -140,7 +139,6 @@ public class CharacterService {
                 break;
             }
         }
-        updateCharacterPositions(characters);
     }
 
     @Transactional
