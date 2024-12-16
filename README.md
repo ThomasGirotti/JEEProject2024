@@ -135,7 +135,7 @@ Nous avons utiliser les différents outils demandé afin de mener a bien la fina
 - Spring Data JPA
 - H2 Data Base
 - Thymleaf
-- Modéle MVC (model, vue, controller)
+- Modèle MVC (Modèle, vue, controlleur)
 
 On a implémenté différente fonction d'un CRUD avec :
 
