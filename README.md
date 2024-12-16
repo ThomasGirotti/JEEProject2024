@@ -19,14 +19,14 @@ Ce jeu combine la gestion, l'échange et la compétition pour offrir une expéri
 - **Claim de personnages**: Ajoutez un personnage roll à votre collection, claim disponible toutes les 120 minutes
 - **Boosts des personnages**: Boost de la valeur des personnages que vous possédez déjà, boost disponible toutes les 60 minutes
 - **Tri de la collection**: Triez votre collection de manière personnalisé, par valeur de personnage ou par nom de personnage
-- **Echanges entre joueurs**: Proposez des personnages à l'échange et acceptez les propositions des autres joueurs
+- **Échanges entre joueurs**: Proposez des personnages à l'échange et acceptez les propositions des autres joueurs
 - **Follow d'autres joueurs**: Suivez d'autres utilisateurs pour y accéder rapidement et surveiller leur collection
 
 ## Installation
 
 ### Pré-requis
 
-- Java 17
+- Java 21
 - Un navigateur internet (Google Chrome de préférence)
 
 ### Étapes
@@ -105,7 +105,7 @@ CY Tech Pau
 
 ## Auto-évaluation
 
-### Fonctionnalités : **4 points**
+### Fonctionnalités : **5 points**
 
 - L'application couvre l'ensemble des fonctionnalités demandées dans la grille d'évaluation : *cinq entités connectées par divers types de relations (1-1, 1-N, N-1, N-N), interface graphique avec gestion des associations, et logique métier intégrée.*
 
@@ -174,3 +174,33 @@ Points à améliorer :
 - Peaufiner le design de l'application pour une expérience utilisateur optimale.
 - Répartir les tâches de manière plus équilibrée pour garantir une progression collective.
 - Regrouper les méthodes similaires dans des classes utilitaires pour une meilleure organisation du code.
+
+## Screenshots
+
+Accueil:
+
+![Accueil](/Screenshots/Capture_decran_2024-12-16_000241.png)  
+
+---
+
+Page de rolls:
+
+![Rolls](/Screenshots/Capture_decran_2024-12-16_000313.png)  
+
+---
+
+Collection:
+
+![Collection](/Screenshots/Capture_decran_2024-12-16_000338.png)  
+
+---
+
+Liste de suivi:
+
+![FollowList](/Screenshots/Capture_decran_2024-12-16_000449.png)  
+
+---
+
+Top des personnages:
+
+![TopCharacters](/Screenshots/Capture_decran_2024-12-16_000557.png)
